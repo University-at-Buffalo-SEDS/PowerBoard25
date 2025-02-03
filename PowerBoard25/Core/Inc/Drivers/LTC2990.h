@@ -23,10 +23,13 @@
 #define ENABLE_ALL            (0x18)
 #define TEMP_MEAS_MODE_MASK   (0x18)
 
-typedef struct {
-	static constexpr uint16_t TIMEOUT = 1000;
-	static constexpr float SINGLE_ENDED_LSB = 5.0f / 16384.0f; // 5V / 2^14
+// Conversion Constants
+#define SINGLE_ENDED_LSB (5.0f / 16384.0f) // 5V / 2^14
 
+// Timeout for data validity in milliseconds
+#define TIMEOUT 1000
+
+typedef struct {
 	uint8_t i2c_address;
 
 	// Internal buffer for voltage readings

@@ -1,0 +1,8 @@
+#include "Drivers/LTC2990.h"
+
+int LTC2990_Init(LTC2990_Handle_t *handle) {
+	for (int i = 0; i < 4; i++) {
+		//handle->last_voltages[i] = NAN;
+	}
+	return 0;
+}

@@ -65,3 +65,252 @@ arm-none-eabi-size  PowerBoard25.elf
   26016	     96	   9592	  35704	   8b78	PowerBoard25.elf
 Finished building: default.size.stdout
  
+18:13:36 **** Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.d" -MT"Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pcd_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.o"
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc "../Core/Src/app_freertos.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/app_freertos.d" -MT"Core/Src/app_freertos.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/app_freertos.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_hal_msp.d" -MT"Core/Src/stm32g4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_it.d" -MT"Core/Src/stm32g4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_it.o"
+arm-none-eabi-gcc "../Core/Src/system_stm32g4xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/system_stm32g4xx.d" -MT"Core/Src/system_stm32g4xx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/system_stm32g4xx.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:27:9: error: expected specifier-qualifier-list before 'static'
+   27 |         static constexpr uint16_t TIMEOUT = 1000;
+      |         ^~~~~~
+../Core/Src/Drivers/LTC2990.c:3:12: error: static declaration of 'LTC2990_Init' follows non-static declaration
+    3 | static int LTC2990_Init(LTC2990_Handle_t *handle) {
+      |            ^~~~~~~~~~~~
+../Core/Inc/Drivers/LTC2990.h:36:5: note: previous declaration of 'LTC2990_Init' with type 'int(LTC2990_Handle_t *)'
+   36 | int LTC2990_Init(LTC2990_Handle_t *handle);
+      |     ^~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:5:23: error: 'LTC2990_Handle_t' has no member named 'last_voltages'
+    5 |                 handle->last_voltages[i] = NAN;
+      |                       ^~
+../Core/Src/Drivers/LTC2990.c:7:1: warning: no return statement in function returning non-void [-Wreturn-type]
+    7 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: At top level:
+../Core/Src/Drivers/LTC2990.c:3:12: warning: 'LTC2990_Init' defined but not used [-Wunused-function]
+    3 | static int LTC2990_Init(LTC2990_Handle_t *handle) {
+      |            ^~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:13:55 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:27:9: error: expected specifier-qualifier-list before 'static'
+   27 |         static constexpr uint16_t TIMEOUT = 1000;
+      |         ^~~~~~
+../Core/Src/Drivers/LTC2990.c:3:12: error: static declaration of 'LTC2990_Init' follows non-static declaration
+    3 | static int LTC2990_Init(LTC2990_Handle_t *handle) {
+      |            ^~~~~~~~~~~~
+../Core/Inc/Drivers/LTC2990.h:36:5: note: previous declaration of 'LTC2990_Init' with type 'int(LTC2990_Handle_t *)'
+   36 | int LTC2990_Init(LTC2990_Handle_t *handle);
+      |     ^~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:5:23: error: 'LTC2990_Handle_t' has no member named 'last_voltages'
+    5 |                 handle->last_voltages[i] = NAN;
+      |                       ^~
+../Core/Src/Drivers/LTC2990.c:7:1: warning: no return statement in function returning non-void [-Wreturn-type]
+    7 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: At top level:
+../Core/Src/Drivers/LTC2990.c:3:12: warning: 'LTC2990_Init' defined but not used [-Wunused-function]
+    3 | static int LTC2990_Init(LTC2990_Handle_t *handle) {
+      |            ^~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:15:40 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:27:9: error: expected specifier-qualifier-list before 'static'
+   27 |         static constexpr uint16_t TIMEOUT = 1000;
+      |         ^~~~~~
+../Core/Src/Drivers/LTC2990.c:3:12: error: static declaration of 'LTC2990_Init' follows non-static declaration
+    3 | static int LTC2990_Init(LTC2990_Handle_t *handle) {
+      |            ^~~~~~~~~~~~
+../Core/Inc/Drivers/LTC2990.h:36:5: note: previous declaration of 'LTC2990_Init' with type 'int(LTC2990_Handle_t *)'
+   36 | int LTC2990_Init(LTC2990_Handle_t *handle);
+      |     ^~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:7:1: warning: no return statement in function returning non-void [-Wreturn-type]
+    7 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: At top level:
+../Core/Src/Drivers/LTC2990.c:3:12: warning: 'LTC2990_Init' defined but not used [-Wunused-function]
+    3 | static int LTC2990_Init(LTC2990_Handle_t *handle) {
+      |            ^~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:15:45 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:27:9: error: expected specifier-qualifier-list before 'static'
+   27 |         static constexpr uint16_t TIMEOUT = 1000;
+      |         ^~~~~~
+../Core/Src/Drivers/LTC2990.c:3:12: error: static declaration of 'LTC2990_Init' follows non-static declaration
+    3 | static int LTC2990_Init(LTC2990_Handle_t *handle) {
+      |            ^~~~~~~~~~~~
+../Core/Inc/Drivers/LTC2990.h:36:5: note: previous declaration of 'LTC2990_Init' with type 'int(LTC2990_Handle_t *)'
+   36 | int LTC2990_Init(LTC2990_Handle_t *handle);
+      |     ^~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:7:1: warning: no return statement in function returning non-void [-Wreturn-type]
+    7 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: At top level:
+../Core/Src/Drivers/LTC2990.c:3:12: warning: 'LTC2990_Init' defined but not used [-Wunused-function]
+    3 | static int LTC2990_Init(LTC2990_Handle_t *handle) {
+      |            ^~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:16:45 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:27:9: error: expected specifier-qualifier-list before 'static'
+   27 |         static constexpr uint16_t TIMEOUT = 1000;
+      |         ^~~~~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:7:1: warning: control reaches end of non-void function [-Wreturn-type]
+    7 | }
+      | ^
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:17:57 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:28:9: error: unknown type name 'constexpr'
+   28 |         constexpr uint16_t TIMEOUT = 1000;
+      |         ^~~~~~~~~
+../Core/Inc/Drivers/LTC2990.h:28:28: error: expected ':', ',', ';', '}' or '__attribute__' before 'TIMEOUT'
+   28 |         constexpr uint16_t TIMEOUT = 1000;
+      |                            ^~~~~~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:7:1: warning: control reaches end of non-void function [-Wreturn-type]
+    7 | }
+      | ^
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:21:34 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:7:1: warning: control reaches end of non-void function [-Wreturn-type]
+    7 | }
+      | ^
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+18:21:49 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+18:22:46 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:28:32: error: expected ':', ',', ';', '}' or '__attribute__' before '=' token
+   28 |         const uint16_t TIMEOUT = 1000;
+      |                                ^
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:23:00 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:28:9: error: expected specifier-qualifier-list before 'static'
+   28 |         static const uint16_t TIMEOUT = 1000;
+      |         ^~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:23:20 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:29:9: error: expected specifier-qualifier-list before 'static'
+   29 |         static const float SINGLE_ENDED_LSB = 5.0f / 16384.0f; // 5V / 2^14
+      |         ^~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:23:36 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+18:29:38 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:29:38: error: expected ':', ',', ';', '}' or '__attribute__' before '=' token
+   29 |         const float SINGLE_ENDED_LSB = 1000; // 5V / 2^14
+      |                                      ^
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+18:29:59 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
