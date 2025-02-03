@@ -33,7 +33,7 @@ typedef struct {
 	float last_voltages[4];
 } LTC2990_Handle_t;
 
-int LTC2990_Init(LTC2990_Handle_t *handle);
+int LTC2990_Setup(LTC2990_Handle_t *handle);
 void LTC2990_Step(LTC2990_Handle_t *handle);
 void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages);
 
