@@ -94,13 +94,18 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-02-03 17:17:20.020
 !MESSAGE Started RMI Server, listening on port 41337
+<<<<<<< Updated upstream
 !SESSION 2025-02-03 17:55:17.206 -----------------------------------------------
+=======
+!SESSION 2025-02-03 17:33:58.713 -----------------------------------------------
+>>>>>>> Stashed changes
 eclipse.buildId=Version 1.17.0
 java.version=21.0.3
 java.vendor=Eclipse Adoptium
 BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
 Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
+<<<<<<< Updated upstream
 !ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-02-03 17:55:29.994
 !MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
 
@@ -108,4 +113,46 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 !MESSAGE Log4j2 initialized with config file C:\Users\zyadp\Documents\GitHub\PowerBoard25\.metadata\.log4j2.xml
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-02-03 17:55:35.252
+=======
+!ENTRY org.eclipse.core.resources 2 10035 2025-02-03 17:34:04.299
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-02-03 17:34:08.510
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-02-03 17:34:08.512
+!MESSAGE Log4j2 initialized with config file C:\Users\zyadp\Documents\GitHub\PowerBoard25\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-02-03 17:34:14.389
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-02-03 17:40:42.409 -----------------------------------------------
+eclipse.buildId=Version 1.17.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-02-03 17:40:49.593
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-02-03 17:40:49.595
+!MESSAGE Log4j2 initialized with config file C:\Users\zyadp\Documents\GitHub\PowerBoard25\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-02-03 17:40:54.683
+>>>>>>> Stashed changes
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-02-03 17:59:38.969 -----------------------------------------------
+eclipse.buildId=Version 1.17.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-02-03 17:59:47.335
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-02-03 17:59:47.338
+!MESSAGE Log4j2 initialized with config file C:\Users\zyadp\Documents\GitHub\PowerBoard25\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-02-03 17:59:52.771
 !MESSAGE Started RMI Server, listening on port 41337
