@@ -1,0 +1,10 @@
+19:10:45 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-size  PowerBoard25.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26016	     96	   9592	  35704	   8b78	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+
+19:10:45 Build Finished. 0 errors, 0 warnings. (took 360ms)
+

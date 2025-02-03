@@ -1,0 +1,34 @@
+#ifndef LTC2990_H
+#define LTC2990_H
+
+#include "stm32g4xx_hal.h"
+#include <math.h>
+
+// I2C Register Addresses
+#define STATUS_REG        (0x00)
+#define CONTROL_REG       (0x01)
+#define TRIGGER_REG       (0x02)
+#define V1_MSB_REG        (0x06)
+#define V1_LSB_REG        (0x07)
+#define V2_MSB_REG        (0x08)
+#define V2_LSB_REG        (0x09)
+#define V3_MSB_REG        (0x0A)
+#define V3_LSB_REG        (0x0B)
+#define V4_MSB_REG        (0x0C)
+#define V4_LSB_REG        (0x0D)
+
+// Control Register Settings
+#define VOLTAGE_MODE_MASK     (0x07)
+#define V1_V2_V3_V4           (0x07)
+#define ENABLE_ALL            (0x18)
+#define TEMP_MEAS_MODE_MASK   (0x18)
+
+typedef struct {
+	constexpr uint16_t TIMEOUT = 1000;
+	uint8_t i2c_address;
+
+	// Internal buffer for voltage readings
+	float last_voltages[4];
+} BMP390_Handle_t;
+
+#endif
