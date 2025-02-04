@@ -820,3 +820,243 @@ Finished building: default.size.stdout
  
 Finished building: PowerBoard25.list
  
+19:25:50 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-size  PowerBoard25.elf 
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+19:25:58 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:8:16: warning: unused variable 'ack' [-Wunused-variable]
+    8 |         int8_t ack;
+      |                ^~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Code_To_Single_Ended_Voltage':
+../Core/Src/Drivers/LTC2990.c:20:1: warning: control reaches end of non-void function [-Wreturn-type]
+   20 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Write_Register':
+../Core/Src/Drivers/LTC2990.c:24:1: warning: control reaches end of non-void function [-Wreturn-type]
+   24 | }
+      | ^
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:26:01 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-size  PowerBoard25.elf 
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+19:26:06 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:8:16: warning: unused variable 'ack' [-Wunused-variable]
+    8 |         int8_t ack;
+      |                ^~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Code_To_Single_Ended_Voltage':
+../Core/Src/Drivers/LTC2990.c:20:1: warning: control reaches end of non-void function [-Wreturn-type]
+   20 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Write_Register':
+../Core/Src/Drivers/LTC2990.c:24:1: warning: control reaches end of non-void function [-Wreturn-type]
+   24 | }
+      | ^
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:35:25 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:9:16: warning: unused variable 'ack' [-Wunused-variable]
+    9 |         int8_t ack;
+      |                ^~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Write_Register':
+../Core/Src/Drivers/LTC2990.c:30:41: error: 'i2c_address' undeclared (first use in this function); did you mean 'reg_address'?
+   30 |         HAL_I2C_Mem_Write(handle->hi2c, i2c_address, (uint16_t)reg_address, I2C_MEMADD_SIZE_8BIT, data, 1, TIMEOUT);
+      |                                         ^~~~~~~~~~~
+      |                                         reg_address
+../Core/Src/Drivers/LTC2990.c:30:41: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/Drivers/LTC2990.c:30:99: warning: passing argument 5 of 'HAL_I2C_Mem_Write' makes pointer from integer without a cast [-Wint-conversion]
+   30 |         HAL_I2C_Mem_Write(handle->hi2c, i2c_address, (uint16_t)reg_address, I2C_MEMADD_SIZE_8BIT, data, 1, TIMEOUT);
+      |                                                                                                   ^~~~
+      |                                                                                                   |
+      |                                                                                                   uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:280,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/Drivers/LTC2990.h:4,
+                 from ../Core/Src/Drivers/LTC2990.c:1:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_i2c.h:633:67: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t' {aka 'unsigned char'}
+  633 |                                     uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                          ~~~~~~~~~^~~~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Code_To_Single_Ended_Voltage':
+../Core/Src/Drivers/LTC2990.c:21:1: warning: control reaches end of non-void function [-Wreturn-type]
+   21 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Read_Register':
+../Core/Src/Drivers/LTC2990.c:26:1: warning: control reaches end of non-void function [-Wreturn-type]
+   26 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Write_Register':
+../Core/Src/Drivers/LTC2990.c:31:1: warning: control reaches end of non-void function [-Wreturn-type]
+   31 | }
+      | ^
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:39:18 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:9:16: warning: unused variable 'ack' [-Wunused-variable]
+    9 |         int8_t ack;
+      |                ^~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Write_Register':
+../Core/Src/Drivers/LTC2990.c:30:107: warning: passing argument 5 of 'HAL_I2C_Mem_Write' makes pointer from integer without a cast [-Wint-conversion]
+   30 |         HAL_I2C_Mem_Write(handle->hi2c, handle->i2c_address, (uint16_t)reg_address, I2C_MEMADD_SIZE_8BIT, data, 1, TIMEOUT);
+      |                                                                                                           ^~~~
+      |                                                                                                           |
+      |                                                                                                           uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:280,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/Drivers/LTC2990.h:4,
+                 from ../Core/Src/Drivers/LTC2990.c:1:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_i2c.h:633:67: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'uint8_t' {aka 'unsigned char'}
+  633 |                                     uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                          ~~~~~~~~~^~~~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Code_To_Single_Ended_Voltage':
+../Core/Src/Drivers/LTC2990.c:21:1: warning: control reaches end of non-void function [-Wreturn-type]
+   21 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Read_Register':
+../Core/Src/Drivers/LTC2990.c:26:1: warning: control reaches end of non-void function [-Wreturn-type]
+   26 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Write_Register':
+../Core/Src/Drivers/LTC2990.c:31:1: warning: control reaches end of non-void function [-Wreturn-type]
+   31 | }
+      | ^
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:41:48 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:9:16: warning: unused variable 'ack' [-Wunused-variable]
+    9 |         int8_t ack;
+      |                ^~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Code_To_Single_Ended_Voltage':
+../Core/Src/Drivers/LTC2990.c:21:1: warning: control reaches end of non-void function [-Wreturn-type]
+   21 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Read_Register':
+../Core/Src/Drivers/LTC2990.c:26:1: warning: control reaches end of non-void function [-Wreturn-type]
+   26 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Write_Register':
+../Core/Src/Drivers/LTC2990.c:31:1: warning: control reaches end of non-void function [-Wreturn-type]
+   31 | }
+      | ^
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:45:55 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:9:16: warning: unused variable 'ack' [-Wunused-variable]
+    9 |         int8_t ack;
+      |                ^~~
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Code_To_Single_Ended_Voltage':
+../Core/Src/Drivers/LTC2990.c:21:1: warning: control reaches end of non-void function [-Wreturn-type]
+   21 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Read_Register':
+../Core/Src/Drivers/LTC2990.c:26:1: warning: control reaches end of non-void function [-Wreturn-type]
+   26 | }
+      | ^
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:46:06 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Code_To_Single_Ended_Voltage':
+../Core/Src/Drivers/LTC2990.c:21:1: warning: control reaches end of non-void function [-Wreturn-type]
+   21 | }
+      | ^
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Read_Register':
+../Core/Src/Drivers/LTC2990.c:26:1: warning: control reaches end of non-void function [-Wreturn-type]
+   26 | }
+      | ^
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:46:21 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 

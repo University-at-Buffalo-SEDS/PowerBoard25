@@ -1,0 +1,25 @@
+#include "Drivers/LTC2990.h"
+
+//To ask Parth
+//should I use blocking or non-blocking functions for HAL_I2C function calls
+//what does inline in bmp390 driver meannnn
+
+//this needs to be finished
+int LTC2990_Init(LTC2990_Handle_t *handle) {
+	int8_t ack;
+
+	//Initialize voltages to NAN
+	for (int i = 0; i < 4; i++) {
+		handle->last_voltages[i] = NAN;
+	}
+
+	return 0;
+}
+
+float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code) {
+	HAL_I2C_MASTER_RE
+}
+
+int8_t LTC2990_Write_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t data) {
+	HAL_I2C_Master_Transmit(handle->hi2c, reg_address << 1, &data, sizeof(data), TIMEOUT);
+}
