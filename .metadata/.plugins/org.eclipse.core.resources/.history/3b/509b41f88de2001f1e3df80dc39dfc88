@@ -30,7 +30,6 @@
 #define TIMEOUT 1000
 
 typedef struct {
-	I2C_HandleTypeDef *hi2c;
 	uint8_t i2c_address;
 
 	// Internal buffer for voltage readings

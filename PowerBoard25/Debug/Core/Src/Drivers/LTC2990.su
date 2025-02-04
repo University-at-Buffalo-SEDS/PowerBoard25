@@ -1,1 +1,3 @@
 ../Core/Src/Drivers/LTC2990.c:7:5:LTC2990_Init	24	static
+../Core/Src/Drivers/LTC2990.c:18:7:LTC2990_Code_To_Single_Ended_Voltage	16	static
+../Core/Src/Drivers/LTC2990.c:22:8:LTC2990_Write_Register	24	static
