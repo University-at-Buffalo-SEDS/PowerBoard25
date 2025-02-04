@@ -14,7 +14,3 @@ int LTC2990_Init(LTC2990_Handle_t *handle) {
 
 	return 0;
 }
-
-float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t, int16_t adc_code) {
-
-}

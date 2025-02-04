@@ -115,8 +115,8 @@ Discarded input sections
  .bss           0x00000000        0x0 ./Core/Src/Drivers/LTC2990.o
  .text.LTC2990_Init
                 0x00000000       0x3c ./Core/Src/Drivers/LTC2990.o
- .debug_info    0x00000000      0x12a ./Core/Src/Drivers/LTC2990.o
- .debug_abbrev  0x00000000       0xbf ./Core/Src/Drivers/LTC2990.o
+ .debug_info    0x00000000      0x14e ./Core/Src/Drivers/LTC2990.o
+ .debug_abbrev  0x00000000       0xce ./Core/Src/Drivers/LTC2990.o
  .debug_aranges
                 0x00000000       0x20 ./Core/Src/Drivers/LTC2990.o
  .debug_rnglists
@@ -178,7 +178,7 @@ Discarded input sections
  .debug_macro   0x00000000      0x19b ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000       0x6a ./Core/Src/Drivers/LTC2990.o
  .debug_line    0x00000000      0x8f4 ./Core/Src/Drivers/LTC2990.o
- .debug_str     0x00000000    0xbca91 ./Core/Src/Drivers/LTC2990.o
+ .debug_str     0x00000000    0xbcaa1 ./Core/Src/Drivers/LTC2990.o
  .comment       0x00000000       0x44 ./Core/Src/Drivers/LTC2990.o
  .debug_frame   0x00000000       0x38 ./Core/Src/Drivers/LTC2990.o
  .ARM.attributes
