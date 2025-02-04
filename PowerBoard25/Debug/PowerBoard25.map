@@ -115,14 +115,16 @@ Discarded input sections
  .bss           0x00000000        0x0 ./Core/Src/Drivers/LTC2990.o
  .text.LTC2990_Init
                 0x00000000       0x3c ./Core/Src/Drivers/LTC2990.o
+ .text.LTC2990_Read_Register
+                0x00000000       0x48 ./Core/Src/Drivers/LTC2990.o
  .text.LTC2990_Write_Register
                 0x00000000       0x48 ./Core/Src/Drivers/LTC2990.o
- .debug_info    0x00000000      0x83b ./Core/Src/Drivers/LTC2990.o
- .debug_abbrev  0x00000000      0x1a3 ./Core/Src/Drivers/LTC2990.o
+ .debug_info    0x00000000      0x8b8 ./Core/Src/Drivers/LTC2990.o
+ .debug_abbrev  0x00000000      0x1a9 ./Core/Src/Drivers/LTC2990.o
  .debug_aranges
-                0x00000000       0x28 ./Core/Src/Drivers/LTC2990.o
+                0x00000000       0x30 ./Core/Src/Drivers/LTC2990.o
  .debug_rnglists
-                0x00000000       0x19 ./Core/Src/Drivers/LTC2990.o
+                0x00000000       0x1f ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000      0x2a7 ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000      0xab4 ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000      0x161 ./Core/Src/Drivers/LTC2990.o
@@ -179,10 +181,10 @@ Discarded input sections
  .debug_macro   0x00000000      0x369 ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000      0x19b ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000       0x6a ./Core/Src/Drivers/LTC2990.o
- .debug_line    0x00000000      0x91a ./Core/Src/Drivers/LTC2990.o
- .debug_str     0x00000000    0xbd0a8 ./Core/Src/Drivers/LTC2990.o
+ .debug_line    0x00000000      0x940 ./Core/Src/Drivers/LTC2990.o
+ .debug_str     0x00000000    0xbd0cf ./Core/Src/Drivers/LTC2990.o
  .comment       0x00000000       0x44 ./Core/Src/Drivers/LTC2990.o
- .debug_frame   0x00000000       0x5c ./Core/Src/Drivers/LTC2990.o
+ .debug_frame   0x00000000       0x80 ./Core/Src/Drivers/LTC2990.o
  .ARM.attributes
                 0x00000000       0x34 ./Core/Src/Drivers/LTC2990.o
  .group         0x00000000        0xc ./Core/Src/app_freertos.o

@@ -1,2 +1,3 @@
 ../Core/Src/Drivers/LTC2990.c:8:5:LTC2990_Init	24	static
-../Core/Src/Drivers/LTC2990.c:29:8:LTC2990_Write_Register	48	static
+../Core/Src/Drivers/LTC2990.c:23:8:LTC2990_Read_Register	48	static
+../Core/Src/Drivers/LTC2990.c:33:8:LTC2990_Write_Register	48	static
