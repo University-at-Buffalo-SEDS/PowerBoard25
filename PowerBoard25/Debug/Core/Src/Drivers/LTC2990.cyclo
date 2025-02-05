@@ -1,8 +1,9 @@
 ../Core/Src/Drivers/LTC2990.c:9:5:LTC2990_Init	2
-../Core/Src/Drivers/LTC2990.c:20:8:LTC2990_Enable_All_Voltages	1
-../Core/Src/Drivers/LTC2990.c:25:8:LTC2990_Set_Mode	2
-../Core/Src/Drivers/LTC2990.c:45:8:LTC2990_Trigger_Conversion	1
-../Core/Src/Drivers/LTC2990.c:50:9:LTC2990_ADC_Read_New_Data	5
-../Core/Src/Drivers/LTC2990.c:79:7:LTC2990_Code_To_Single_Ended_Voltage	2
-../Core/Src/Drivers/LTC2990.c:93:8:LTC2990_Read_Register	2
-../Core/Src/Drivers/LTC2990.c:103:8:LTC2990_Write_Register	2
+../Core/Src/Drivers/LTC2990.c:20:6:LTC2990_Get_Voltage	2
+../Core/Src/Drivers/LTC2990.c:27:8:LTC2990_Enable_All_Voltages	1
+../Core/Src/Drivers/LTC2990.c:32:8:LTC2990_Set_Mode	2
+../Core/Src/Drivers/LTC2990.c:52:8:LTC2990_Trigger_Conversion	1
+../Core/Src/Drivers/LTC2990.c:57:9:LTC2990_ADC_Read_New_Data	5
+../Core/Src/Drivers/LTC2990.c:86:7:LTC2990_Code_To_Single_Ended_Voltage	2
+../Core/Src/Drivers/LTC2990.c:100:8:LTC2990_Read_Register	2
+../Core/Src/Drivers/LTC2990.c:110:8:LTC2990_Write_Register	2

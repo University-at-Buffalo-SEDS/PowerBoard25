@@ -17,13 +17,6 @@ int LTC2990_Init(LTC2990_Handle_t *handle) {
 	return 0;
 }
 
-void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages) {
-	for(int i = 0; i < 4; i++) {
-		voltages[i] = handle->last_voltages[i];
-	}
-}
-
-
 int8_t LTC2990_Enable_All_Voltages(LTC2990_Handle_t *handle) {
 	return LTC2990_Set_Mode(handle, ENABLE_ALL, TEMP_MEAS_MODE_MASK);
 }

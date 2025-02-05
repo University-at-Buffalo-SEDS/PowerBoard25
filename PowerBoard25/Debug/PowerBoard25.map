@@ -115,6 +115,8 @@ Discarded input sections
  .bss           0x00000000        0x0 ./Core/Src/Drivers/LTC2990.o
  .text.LTC2990_Init
                 0x00000000       0x3c ./Core/Src/Drivers/LTC2990.o
+ .text.LTC2990_Get_Voltage
+                0x00000000       0x40 ./Core/Src/Drivers/LTC2990.o
  .text.LTC2990_Enable_All_Voltages
                 0x00000000       0x1c ./Core/Src/Drivers/LTC2990.o
  .text.LTC2990_Set_Mode
@@ -129,12 +131,12 @@ Discarded input sections
                 0x00000000       0x4a ./Core/Src/Drivers/LTC2990.o
  .text.LTC2990_Write_Register
                 0x00000000       0x4a ./Core/Src/Drivers/LTC2990.o
- .debug_info    0x00000000      0xa7d ./Core/Src/Drivers/LTC2990.o
- .debug_abbrev  0x00000000      0x1da ./Core/Src/Drivers/LTC2990.o
+ .debug_info    0x00000000      0xacb ./Core/Src/Drivers/LTC2990.o
+ .debug_abbrev  0x00000000      0x1f5 ./Core/Src/Drivers/LTC2990.o
  .debug_aranges
-                0x00000000       0x58 ./Core/Src/Drivers/LTC2990.o
+                0x00000000       0x60 ./Core/Src/Drivers/LTC2990.o
  .debug_rnglists
-                0x00000000       0x3d ./Core/Src/Drivers/LTC2990.o
+                0x00000000       0x43 ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000      0x2a7 ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000      0xab4 ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000      0x161 ./Core/Src/Drivers/LTC2990.o
@@ -191,10 +193,10 @@ Discarded input sections
  .debug_macro   0x00000000      0x369 ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000      0x19b ./Core/Src/Drivers/LTC2990.o
  .debug_macro   0x00000000       0x6a ./Core/Src/Drivers/LTC2990.o
- .debug_line    0x00000000      0xa1f ./Core/Src/Drivers/LTC2990.o
- .debug_str     0x00000000    0xbd1de ./Core/Src/Drivers/LTC2990.o
+ .debug_line    0x00000000      0xa5c ./Core/Src/Drivers/LTC2990.o
+ .debug_str     0x00000000    0xbd1fb ./Core/Src/Drivers/LTC2990.o
  .comment       0x00000000       0x44 ./Core/Src/Drivers/LTC2990.o
- .debug_frame   0x00000000      0x138 ./Core/Src/Drivers/LTC2990.o
+ .debug_frame   0x00000000      0x160 ./Core/Src/Drivers/LTC2990.o
  .ARM.attributes
                 0x00000000       0x34 ./Core/Src/Drivers/LTC2990.o
  .group         0x00000000        0xc ./Core/Src/app_freertos.o
