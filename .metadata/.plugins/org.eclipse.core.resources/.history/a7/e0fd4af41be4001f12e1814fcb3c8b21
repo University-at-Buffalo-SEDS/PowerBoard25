@@ -18,7 +18,7 @@ int LTC2990_Init(LTC2990_Handle_t *handle) {
 }
 
 int8_t LTC2990_Enable_All_Voltages(LTC2990_Handle_t *handle) {
-	return LTC2990_Set_Mode(handle, ENABLE_ALL, TEMP_MEAS_MODE_MASK);
+	return LTC2990_Set_Mode(ENABLE_ALL, TEMP_MEAS_MODE_MASK);
 }
 
 

@@ -17,10 +17,6 @@ int LTC2990_Init(LTC2990_Handle_t *handle) {
 	return 0;
 }
 
-int8_t LTC2990_Enable_All_Voltages(LTC2990_Handle_t *handle) {
-	return LTC2990_Set_Mode(handle, ENABLE_ALL, TEMP_MEAS_MODE_MASK);
-}
-
 
 int8_t LTC2990_Set_Mode(LTC2990_Handle_t *handle, uint8_t bits_to_set, uint8_t bits_to_clear) {
 	uint8_t reg_data;
