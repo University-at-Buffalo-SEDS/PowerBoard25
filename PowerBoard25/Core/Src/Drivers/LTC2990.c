@@ -16,6 +16,25 @@ int LTC2990_Init(LTC2990_Handle_t *handle) {
 	return 0;
 }
 
+uint8_t LTC2990_ADC_Read_New_Data(LTC2990_Handle_t *handle, uint8_t msb_register_address, int16_t* adc_code, int8_t* data_valid) {
+	uint16_t timeout = TIMEOUT;
+	int8_t ack;
+	uint8_t status;
+	uint8_t status_bit = (msb_register_address / 2) - 1;
+
+	// Wait for new data
+	while (timeout--) {
+		ack = LTC2990_Read_Register(handle, STATUS_REG, &status);
+		if (ack != 0) return ack;
+
+		if (((status >> status_bit) & 0x01) == 1) break;
+
+		delay(1);
+	}
+	if (timeout == 0) return 1; // Timeout
+
+}
+
 float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code) {
 	float voltage;
 	int16_t sign = 1;

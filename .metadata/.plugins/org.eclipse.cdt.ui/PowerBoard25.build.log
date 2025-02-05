@@ -1,6 +1,13 @@
-20:03:27 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+18:04:38 **** Incremental Build of configuration Debug for project PowerBoard25 ****
 make -j16 all 
 arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_ADC_Read_New_Data':
+../Core/Src/Drivers/LTC2990.c:32:17: warning: implicit declaration of function 'delay' [-Wimplicit-function-declaration]
+   32 |                 delay(1);
+      |                 ^~~~~
+../Core/Src/Drivers/LTC2990.c:36:1: warning: control reaches end of non-void function [-Wreturn-type]
+   36 | }
+      | ^
 arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: PowerBoard25.elf
  
@@ -13,5 +20,5 @@ Finished building: default.size.stdout
 Finished building: PowerBoard25.list
  
 
-20:03:28 Build Finished. 0 errors, 0 warnings. (took 1s.343ms)
+18:04:39 Build Finished. 0 errors, 2 warnings. (took 703ms)
 

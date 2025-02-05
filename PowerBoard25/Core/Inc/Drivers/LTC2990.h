@@ -44,7 +44,7 @@ void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages);
 int8_t LTC2990_Set_Mode(LTC2990_Handle_t *handle, uint8_t bits_to_set, uint8_t bits_to_clear);
 int8_t LTC2990_Enable_All_Voltages(LTC2990_Handle_t *handle);
 int8_t LTC2990_Trigger_Conversion(LTC2990_Handle_t *handle);
-uint8_t LTC2990_Read_New_Data(LTC2990_Handle_t *handle, uint8_t msb_register_address, int16_t* adc_code, int8_t* data_valid);
+uint8_t LTC2990_ADC_Read_New_Data(LTC2990_Handle_t *handle, uint8_t msb_register_address, int16_t* adc_code, int8_t* data_valid);
 
 float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code);
 
