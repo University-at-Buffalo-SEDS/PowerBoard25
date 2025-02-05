@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdarg.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,7 +37,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define PRINT_BUFFER_SIZE 100
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -46,6 +46,9 @@ FDCAN_HandleTypeDef hfdcan2;
 I2C_HandleTypeDef hi2c2;
 
 /* USER CODE BEGIN PV */
+
+FDCAN_RxHeaderTypeDef RxHeader;
+uint8_t RxData[64];
 
 /* USER CODE END PV */
 
@@ -60,6 +63,15 @@ static void MX_I2C2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void CDC_Transmit_Print(const char * format, ...) {
+	char buf[PRINT_BUFFER_SIZE];
+	va_list args;
+	va_start(args, format);
+	int n = vsprintf(buf, format, args);
+	va_end(args);
+	CDC_Transmit_FS(buf, n);
+}
 
 /* USER CODE END 0 */
 
@@ -103,6 +115,22 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if(HAL_FDCAN_GetRxFifoFillLevel(&hfdcan2, FDCAN_RX_FIFO0) > 0) {
+	  		  CDC_Transmit_Print("There are some messages in the buffer!\n"); //Data to send
+	  		  //Recieve data
+	  		  HAL_StatusTypeDef err = HAL_FDCAN_GetRxMessage(&hfdcan2, FDCAN_RX_FIFO0, &RxHeader, RxData);
+	  		  if (err != HAL_OK)
+	  		  {
+	  			 // n = sprintf(printBuffer, );
+	  			  CDC_Transmit_Print("Error recieving message: 0x%02x\n", err);
+	  		  } else {
+	  			  //n = sprintf(printBuffer, "Recieved message: %s", RxData);
+	  			  //CDC_Transmit_FS(printBuffer, n);
+	  			  CDC_Transmit_Print("Recieved message: %s\n", RxData);
+	  		  }
+	  	  } else {
+	  		  CDC_Transmit_Print("NO MESSAGES IN FIFO0\n"); //Data to send
+	  	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -173,16 +201,16 @@ static void MX_FDCAN2_Init(void)
   hfdcan2.Init.AutoRetransmission = DISABLE;
   hfdcan2.Init.TransmitPause = DISABLE;
   hfdcan2.Init.ProtocolException = DISABLE;
-  hfdcan2.Init.NominalPrescaler = 16;
-  hfdcan2.Init.NominalSyncJumpWidth = 1;
-  hfdcan2.Init.NominalTimeSeg1 = 1;
-  hfdcan2.Init.NominalTimeSeg2 = 1;
+  hfdcan2.Init.NominalPrescaler = 1;
+  hfdcan2.Init.NominalSyncJumpWidth = 16;
+  hfdcan2.Init.NominalTimeSeg1 = 63;
+  hfdcan2.Init.NominalTimeSeg2 = 16;
   hfdcan2.Init.DataPrescaler = 1;
-  hfdcan2.Init.DataSyncJumpWidth = 1;
-  hfdcan2.Init.DataTimeSeg1 = 1;
-  hfdcan2.Init.DataTimeSeg2 = 1;
-  hfdcan2.Init.StdFiltersNbr = 0;
-  hfdcan2.Init.ExtFiltersNbr = 0;
+  hfdcan2.Init.DataSyncJumpWidth = 4;
+  hfdcan2.Init.DataTimeSeg1 = 13;
+  hfdcan2.Init.DataTimeSeg2 = 2;
+  hfdcan2.Init.StdFiltersNbr = 1;
+  hfdcan2.Init.ExtFiltersNbr = 1;
   hfdcan2.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
   if (HAL_FDCAN_Init(&hfdcan2) != HAL_OK)
   {
