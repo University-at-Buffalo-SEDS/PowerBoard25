@@ -16,6 +16,11 @@ int LTC2990_Init(LTC2990_Handle_t *handle) {
 	return 0;
 }
 
+int8_t LTC2990_Trigger_Conversion(LTC2990_Handle_t *handle) {
+	return LTC2990_Write_Register(handle, TRIGGER_REG, 0x00);
+}
+
+
 uint8_t LTC2990_ADC_Read_New_Data(LTC2990_Handle_t *handle, uint8_t msb_register_address, int16_t* adc_code, int8_t* data_valid) {
 	uint16_t timeout = TIMEOUT;
 	int8_t ack;
@@ -25,13 +30,22 @@ uint8_t LTC2990_ADC_Read_New_Data(LTC2990_Handle_t *handle, uint8_t msb_register
 	// Wait for new data
 	while (timeout--) {
 		ack = LTC2990_Read_Register(handle, STATUS_REG, &status);
-		if (ack != 0) return ack;
+		if (ack != 0) {
+			return ack;
+		}
 
 		if (((status >> status_bit) & 0x01) == 1) break;
 
-		delay(1);
+		HAL_Delay(1);
 	}
-	if (timeout == 0) return 1; // Timeout
+
+	if (timeout == 0) {
+		return 1;
+	}
+	//this line is so that there isn't a warning that this function doesn't return
+	//In the actual code, it should NEVER reach this point, as this would be the timeout
+	//ran out but got messed up
+	return 1;
 
 }
 
