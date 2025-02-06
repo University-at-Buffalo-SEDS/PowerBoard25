@@ -1457,3 +1457,254 @@ Finished building: default.size.stdout
  
 Finished building: PowerBoard25.list
  
+18:59:43 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Step':
+../Core/Src/Drivers/LTC2990.c:26:15: error: too few arguments to function 'LTC2990_Trigger_Conversion'
+   26 |         ack = LTC2990_Trigger_Conversion();
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:46:8: note: declared here
+   46 | int8_t LTC2990_Trigger_Conversion(LTC2990_Handle_t *handle);
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c:37:57: error: 'msb_register' undeclared (first use in this function); did you mean 'msb_registers'?
+   37 |                 ack = LTC2990_ADC_Read_New_Data(handle, msb_register[i], &adc_code, &data_valid);
+      |                                                         ^~~~~~~~~~~~
+      |                                                         msb_registers
+../Core/Src/Drivers/LTC2990.c:37:57: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/Drivers/LTC2990.c:35:17: warning: unused variable 'msb_registers' [-Wunused-variable]
+   35 |         uint8_t msb_registers[4] = {V1_MSB_REG, V2_MSB_REG, V3_MSB_REG, V4_MSB_REG};
+      |                 ^~~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:00:24 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Step':
+../Core/Src/Drivers/LTC2990.c:37:57: error: 'msb_register' undeclared (first use in this function); did you mean 'msb_registers'?
+   37 |                 ack = LTC2990_ADC_Read_New_Data(handle, msb_register[i], &adc_code, &data_valid);
+      |                                                         ^~~~~~~~~~~~
+      |                                                         msb_registers
+../Core/Src/Drivers/LTC2990.c:37:57: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/Drivers/LTC2990.c:35:17: warning: unused variable 'msb_registers' [-Wunused-variable]
+   35 |         uint8_t msb_registers[4] = {V1_MSB_REG, V2_MSB_REG, V3_MSB_REG, V4_MSB_REG};
+      |                 ^~~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:00:34 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:02:23 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Step':
+../Core/Src/Drivers/LTC2990.c:41:25: error: 'last_voltages' undeclared (first use in this function)
+   41 |                         last_voltages[i] = NAN;
+      |                         ^~~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c:41:25: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/Drivers/LTC2990.c:44:73: warning: passing argument 1 of 'LTC2990_Code_To_Single_Ended_Voltage' makes pointer from integer without a cast [-Wint-conversion]
+   44 |                 last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(adc_code);
+      |                                                                         ^~~~~~~~
+      |                                                                         |
+      |                                                                         int16_t {aka short int}
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:49:62: note: expected 'LTC2990_Handle_t *' but argument is of type 'int16_t' {aka 'short int'}
+   49 | float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code);
+      |                                            ~~~~~~~~~~~~~~~~~~^~~~~~
+../Core/Src/Drivers/LTC2990.c:44:36: error: too few arguments to function 'LTC2990_Code_To_Single_Ended_Voltage'
+   44 |                 last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(adc_code);
+      |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Inc/Drivers/LTC2990.h:49:7: note: declared here
+   49 | float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:02:35 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Step':
+../Core/Src/Drivers/LTC2990.c:41:25: error: 'last_voltages' undeclared (first use in this function)
+   41 |                         last_voltages[i] = NAN;
+      |                         ^~~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c:41:25: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/Drivers/LTC2990.c:44:81: warning: passing argument 1 of 'LTC2990_Code_To_Single_Ended_Voltage' makes pointer from integer without a cast [-Wint-conversion]
+   44 |                 handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(adc_code);
+      |                                                                                 ^~~~~~~~
+      |                                                                                 |
+      |                                                                                 int16_t {aka short int}
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:49:62: note: expected 'LTC2990_Handle_t *' but argument is of type 'int16_t' {aka 'short int'}
+   49 | float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code);
+      |                                            ~~~~~~~~~~~~~~~~~~^~~~~~
+../Core/Src/Drivers/LTC2990.c:44:44: error: too few arguments to function 'LTC2990_Code_To_Single_Ended_Voltage'
+   44 |                 handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(adc_code);
+      |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Inc/Drivers/LTC2990.h:49:7: note: declared here
+   49 | float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:02:42 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Step':
+../Core/Src/Drivers/LTC2990.c:41:25: error: 'last_voltages' undeclared (first use in this function)
+   41 |                         last_voltages[i] = NAN;
+      |                         ^~~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c:41:25: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/Drivers/LTC2990.c:44:81: warning: passing argument 1 of 'LTC2990_Code_To_Single_Ended_Voltage' makes pointer from integer without a cast [-Wint-conversion]
+   44 |                 handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(adc_code);
+      |                                                                                 ^~~~~~~~
+      |                                                                                 |
+      |                                                                                 int16_t {aka short int}
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:49:62: note: expected 'LTC2990_Handle_t *' but argument is of type 'int16_t' {aka 'short int'}
+   49 | float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code);
+      |                                            ~~~~~~~~~~~~~~~~~~^~~~~~
+../Core/Src/Drivers/LTC2990.c:44:44: error: too few arguments to function 'LTC2990_Code_To_Single_Ended_Voltage'
+   44 |                 handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(adc_code);
+      |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Inc/Drivers/LTC2990.h:49:7: note: declared here
+   49 | float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:03:14 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Step':
+../Core/Src/Drivers/LTC2990.c:41:25: error: 'last_voltages' undeclared (first use in this function)
+   41 |                         last_voltages[i] = NAN;
+      |                         ^~~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c:41:25: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/Drivers/LTC2990.c:44:81: warning: passing argument 1 of 'LTC2990_Code_To_Single_Ended_Voltage' makes pointer from integer without a cast [-Wint-conversion]
+   44 |                 handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(adc_code);
+      |                                                                                 ^~~~~~~~
+      |                                                                                 |
+      |                                                                                 int16_t {aka short int}
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:49:62: note: expected 'LTC2990_Handle_t *' but argument is of type 'int16_t' {aka 'short int'}
+   49 | float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code);
+      |                                            ~~~~~~~~~~~~~~~~~~^~~~~~
+../Core/Src/Drivers/LTC2990.c:44:44: error: too few arguments to function 'LTC2990_Code_To_Single_Ended_Voltage'
+   44 |                 handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(adc_code);
+      |                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Inc/Drivers/LTC2990.h:49:7: note: declared here
+   49 | float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code);
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:03:30 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Step':
+../Core/Src/Drivers/LTC2990.c:41:25: error: 'last_voltages' undeclared (first use in this function)
+   41 |                         last_voltages[i] = NAN;
+      |                         ^~~~~~~~~~~~~
+../Core/Src/Drivers/LTC2990.c:41:25: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:03:42 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:05:04 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:10:16: warning: variable 'ack' set but not used [-Wunused-but-set-variable]
+   10 |         int8_t ack;
+      |                ^~~
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:06:35 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:25:15: warning: implicit declaration of function 'LTC2290_Enable_All_Voltages'; did you mean 'LTC2990_Enable_All_Voltages'? [-Wimplicit-function-declaration]
+   25 |         ack = LTC2290_Enable_All_Voltages(handle);
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |               LTC2990_Enable_All_Voltages
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:06:52 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 
+19:08:06 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:34:9: error: too few arguments to function 'LTC2990_Step'
+   34 |         LTC2990_Step();
+      |         ^~~~~~~~~~~~
+In file included from ../Core/Src/Drivers/LTC2990.c:1:
+../Core/Inc/Drivers/LTC2990.h:41:6: note: declared here
+   41 | void LTC2990_Step(LTC2990_Handle_t *handle);
+      |      ^~~~~~~~~~~~
+make: *** [Core/Src/Drivers/subdir.mk:19: Core/Src/Drivers/LTC2990.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:08:11 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 

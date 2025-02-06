@@ -4,36 +4,15 @@
 //should I use blocking or non-blocking functions for HAL_I2C function calls
 //what does inline in bmp390 driver meannnn
 //Should HAL_delay be changed to vTaskDelay() or something
-//get the print function from fred and implment it
 
 //this needs to be finished
 int LTC2990_Init(LTC2990_Handle_t *handle) {
-	int8_t ack;
+	//int8_t ack;
 
 	//Initialize voltages to NAN
-	//Can this be changed so that it is in the struct
-	//i.e. last_voltages = {NAN, NAN, NAN, NAN}
 	for (int i = 0; i < 4; i++) {
 		handle->last_voltages[i] = NAN;
 	}
-
-	ack = LTC2990_Set_Mode(handle, V1_V2_V3_V4, VOLTAGE_MODE_MASK);
-	if(ack != 0) {
-		//print function saying: Failed to set Single-Ended Mode.
-		while(1);
-	}
-
-	// Enable all voltage channels
-	ack = LTC2990_Enable_All_Voltages(handle);
-	if(ack != 0) {
-		//print function saying: Failed to enable voltage channels.
-		while(1);
-	}
-
-	//print function saying: LTC2990 configured for Single-Ended Voltage Monitoring.
-
-	//Initial data reading
-	LTC2990_Step(handle);
 
 	return 0;
 }

@@ -11,8 +11,6 @@ int LTC2990_Init(LTC2990_Handle_t *handle) {
 	int8_t ack;
 
 	//Initialize voltages to NAN
-	//Can this be changed so that it is in the struct
-	//i.e. last_voltages = {NAN, NAN, NAN, NAN}
 	for (int i = 0; i < 4; i++) {
 		handle->last_voltages[i] = NAN;
 	}
@@ -24,16 +22,7 @@ int LTC2990_Init(LTC2990_Handle_t *handle) {
 	}
 
 	// Enable all voltage channels
-	ack = LTC2990_Enable_All_Voltages(handle);
-	if(ack != 0) {
-		//print function saying: Failed to enable voltage channels.
-		while(1);
-	}
-
-	//print function saying: LTC2990 configured for Single-Ended Voltage Monitoring.
-
-	//Initial data reading
-	LTC2990_Step(handle);
+	ack = LTC2290_Enable_All_Voltages(handle);
 
 	return 0;
 }
