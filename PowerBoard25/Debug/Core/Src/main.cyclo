@@ -1,9 +1,0 @@
-../Core/Src/main.c:79:13:CDC_Transmit_Print	1
-../Core/Src/main.c:92:5:main	1
-../Core/Src/main.c:175:6:SystemClock_Config	3
-../Core/Src/main.c:217:13:MX_FDCAN2_Init	2
-../Core/Src/main.c:260:13:MX_I2C2_Init	4
-../Core/Src/main.c:308:13:MX_LPUART1_UART_Init	5
-../Core/Src/main.c:355:13:MX_GPIO_Init	1
-../Core/Src/main.c:392:6:StartDefaultTask	1
-../Core/Src/main.c:409:6:Error_Handler	1
