@@ -1,10 +1,29 @@
-19:28:09 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+19:39:17 **** Incremental Build of configuration Debug for project PowerBoard25 ****
 make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'CDC_Transmit_Print':
+../Core/Src/main.c:80:17: warning: implicit declaration of function 'vsprintf' [-Wimplicit-function-declaration]
+   80 |         int n = vsprintf(buf, format, args);
+      |                 ^~~~~~~~
+../Core/Src/main.c:27:1: note: include '<stdio.h>' or provide a declaration of 'vsprintf'
+   26 | #include <stdarg.h>
+  +++ |+#include <stdio.h>
+   27 | /* USER CODE END Includes */
+../Core/Src/main.c:81:9: warning: implicit declaration of function 'CDC_Transmit_FS'; did you mean 'CDC_Transmit_Print'? [-Wimplicit-function-declaration]
+   81 |         CDC_Transmit_FS(buf, n);
+      |         ^~~~~~~~~~~~~~~
+      |         CDC_Transmit_Print
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
 arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
    text	   data	    bss	    dec	    hex	filename
   21480	     96	   9440	  31016	   7928	PowerBoard25.elf
 Finished building: default.size.stdout
  
+Finished building: PowerBoard25.list
+ 
 
-19:28:09 Build Finished. 0 errors, 0 warnings. (took 247ms)
+19:39:17 Build Finished. 0 errors, 2 warnings. (took 760ms)
 

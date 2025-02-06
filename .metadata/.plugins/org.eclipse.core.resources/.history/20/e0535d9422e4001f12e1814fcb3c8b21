@@ -22,8 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Drivers/LTC2990.h"
-#include <stdarg.h>
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -33,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define PRINT_BUFFER_SIZE     256
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -73,13 +72,7 @@ void StartDefaultTask(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-extern void CDC_Transmit_Print(const char *format, ...) {
-	char buf[PRINT_BUFFER_SIZE];
-	va_list args;
-	va_start(args, format);
-	int n = vsprintf(buf, format, args);
-	CDC_Transmit_FS(buf, n);
-}
+
 /* USER CODE END 0 */
 
 /**

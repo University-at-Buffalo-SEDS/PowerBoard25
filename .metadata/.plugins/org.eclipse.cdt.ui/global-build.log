@@ -1741,3 +1741,108 @@ arm-none-eabi-size  PowerBoard25.elf
   21480	     96	   9440	  31016	   7928	PowerBoard25.elf
 Finished building: default.size.stdout
  
+19:37:44 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'CDC_Transmit_Print':
+../Core/Src/main.c:76:18: error: 'PRINT_BUFFER_SIZE' undeclared (first use in this function); did you mean 'IS_DMA_BUFFER_SIZE'?
+   76 |         char buf[PRINT_BUFFER_SIZE];
+      |                  ^~~~~~~~~~~~~~~~~
+      |                  IS_DMA_BUFFER_SIZE
+../Core/Src/main.c:76:18: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:77:9: error: unknown type name 'va_list'
+   77 |         va_list args;
+      |         ^~~~~~~
+../Core/Src/main.c:22:1: note: 'va_list' is defined in header '<stdarg.h>'; did you forget to '#include <stdarg.h>'?
+   21 | #include "cmsis_os.h"
+  +++ |+#include <stdarg.h>
+   22 | 
+../Core/Src/main.c:78:9: warning: implicit declaration of function 'va_start' [-Wimplicit-function-declaration]
+   78 |         va_start(args, format);
+      |         ^~~~~~~~
+../Core/Src/main.c:79:17: warning: implicit declaration of function 'vsprintf' [-Wimplicit-function-declaration]
+   79 |         int n = vsprintf(buf, format, args);
+      |                 ^~~~~~~~
+../Core/Src/main.c:22:1: note: include '<stdio.h>' or provide a declaration of 'vsprintf'
+   21 | #include "cmsis_os.h"
+  +++ |+#include <stdio.h>
+   22 | 
+../Core/Src/main.c:79:39: warning: incompatible type for argument 3 of 'vsprintf' [-Wbuiltin-declaration-mismatch]
+   79 |         int n = vsprintf(buf, format, args);
+      |                                       ^~~~
+../Core/Src/main.c:79:39: note: expected '__va_list' but argument is of type 'int'
+../Core/Src/main.c:80:9: warning: implicit declaration of function 'CDC_Transmit_FS'; did you mean 'CDC_Transmit_Print'? [-Wimplicit-function-declaration]
+   80 |         CDC_Transmit_FS(buf, n);
+      |         ^~~~~~~~~~~~~~~
+      |         CDC_Transmit_Print
+../Core/Src/main.c:76:14: warning: unused variable 'buf' [-Wunused-variable]
+   76 |         char buf[PRINT_BUFFER_SIZE];
+      |              ^~~
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:38:12 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'CDC_Transmit_Print':
+../Core/Src/main.c:77:9: error: unknown type name 'va_list'
+   77 |         va_list args;
+      |         ^~~~~~~
+../Core/Src/main.c:22:1: note: 'va_list' is defined in header '<stdarg.h>'; did you forget to '#include <stdarg.h>'?
+   21 | #include "cmsis_os.h"
+  +++ |+#include <stdarg.h>
+   22 | 
+../Core/Src/main.c:78:9: warning: implicit declaration of function 'va_start' [-Wimplicit-function-declaration]
+   78 |         va_start(args, format);
+      |         ^~~~~~~~
+../Core/Src/main.c:79:17: warning: implicit declaration of function 'vsprintf' [-Wimplicit-function-declaration]
+   79 |         int n = vsprintf(buf, format, args);
+      |                 ^~~~~~~~
+../Core/Src/main.c:22:1: note: include '<stdio.h>' or provide a declaration of 'vsprintf'
+   21 | #include "cmsis_os.h"
+  +++ |+#include <stdio.h>
+   22 | 
+../Core/Src/main.c:79:39: warning: incompatible type for argument 3 of 'vsprintf' [-Wbuiltin-declaration-mismatch]
+   79 |         int n = vsprintf(buf, format, args);
+      |                                       ^~~~
+../Core/Src/main.c:79:39: note: expected '__va_list' but argument is of type 'int'
+../Core/Src/main.c:80:9: warning: implicit declaration of function 'CDC_Transmit_FS'; did you mean 'CDC_Transmit_Print'? [-Wimplicit-function-declaration]
+   80 |         CDC_Transmit_FS(buf, n);
+      |         ^~~~~~~~~~~~~~~
+      |         CDC_Transmit_Print
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:39:01 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:25:10: fatal error: Drivers/bmi088_accel.h: No such file or directory
+   25 | #include "Drivers/bmi088_accel.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+19:39:17 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'CDC_Transmit_Print':
+../Core/Src/main.c:80:17: warning: implicit declaration of function 'vsprintf' [-Wimplicit-function-declaration]
+   80 |         int n = vsprintf(buf, format, args);
+      |                 ^~~~~~~~
+../Core/Src/main.c:27:1: note: include '<stdio.h>' or provide a declaration of 'vsprintf'
+   26 | #include <stdarg.h>
+  +++ |+#include <stdio.h>
+   27 | /* USER CODE END Includes */
+../Core/Src/main.c:81:9: warning: implicit declaration of function 'CDC_Transmit_FS'; did you mean 'CDC_Transmit_Print'? [-Wimplicit-function-declaration]
+   81 |         CDC_Transmit_FS(buf, n);
+      |         ^~~~~~~~~~~~~~~
+      |         CDC_Transmit_Print
+arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: PowerBoard25.elf
+ 
+arm-none-eabi-size  PowerBoard25.elf 
+arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	     96	   9440	  31016	   7928	PowerBoard25.elf
+Finished building: default.size.stdout
+ 
+Finished building: PowerBoard25.list
+ 

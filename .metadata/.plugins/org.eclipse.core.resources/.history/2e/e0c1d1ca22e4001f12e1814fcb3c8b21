@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Drivers/LTC2990.h"
+#include "Drivers/bmi088_accel.h"
 #include <stdarg.h>
 /* USER CODE END Includes */
 
