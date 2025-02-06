@@ -1,29 +1,32 @@
-19:45:19 **** Incremental Build of configuration Debug for project PowerBoard25 ****
+18:03:51 **** Incremental Build of configuration Debug for project PowerBoard25 ****
 make -j16 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/Drivers/LTC2990.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../USB_Device/App -I../USB_Device/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/Drivers/LTC2990.d" -MT"Core/Src/Drivers/LTC2990.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/Drivers/LTC2990.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../USB_Device/App -I../USB_Device/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/Drivers/LTC2990.c: In function 'LTC2990_Init':
+../Core/Src/Drivers/LTC2990.c:26:17: warning: implicit declaration of function 'CDC_Transmit_Print' [-Wimplicit-function-declaration]
+   26 |                 CDC_Transmit_Print("Failed to set in Single Voltage Mode");
+      |                 ^~~~~~~~~~~~~~~~~~
 ../Core/Src/main.c: In function 'CDC_Transmit_Print':
-../Core/Src/main.c:83:17: warning: implicit declaration of function 'vsprintf' [-Wimplicit-function-declaration]
-   83 |         int n = vsprintf(buf, format, args);
-      |                 ^~~~~~~~
-../Core/Src/main.c:27:1: note: include '<stdio.h>' or provide a declaration of 'vsprintf'
-   26 | #include <stdarg.h>
-  +++ |+#include <stdio.h>
-   27 | /* USER CODE END Includes */
-../Core/Src/main.c:84:9: warning: implicit declaration of function 'CDC_Transmit_FS'; did you mean 'CDC_Transmit_Print'? [-Wimplicit-function-declaration]
+../Core/Src/main.c:84:25: warning: pointer targets in passing argument 1 of 'CDC_Transmit_FS' differ in signedness [-Wpointer-sign]
    84 |         CDC_Transmit_FS(buf, n);
-      |         ^~~~~~~~~~~~~~~
-      |         CDC_Transmit_Print
+      |                         ^~~
+      |                         |
+      |                         char *
+In file included from ../Core/Src/main.c:23:
+../USB_Device/App/usbd_cdc_if.h:108:34: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  108 | uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
+      |                         ~~~~~~~~~^~~
 arm-none-eabi-gcc -o "PowerBoard25.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\zyadp\Documents\GitHub\PowerBoard25\PowerBoard25\STM32G491CETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PowerBoard25.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: PowerBoard25.elf
  
 arm-none-eabi-size  PowerBoard25.elf 
 arm-none-eabi-objdump -h -S PowerBoard25.elf  > "PowerBoard25.list"
    text	   data	    bss	    dec	    hex	filename
-  26016	     96	   9592	  35704	   8b78	PowerBoard25.elf
+  48224	    472	  15464	  64160	   faa0	PowerBoard25.elf
 Finished building: default.size.stdout
  
 Finished building: PowerBoard25.list
  
 
-19:45:20 Build Finished. 0 errors, 2 warnings. (took 758ms)
+18:03:52 Build Finished. 0 errors, 2 warnings. (took 1s.226ms)
 

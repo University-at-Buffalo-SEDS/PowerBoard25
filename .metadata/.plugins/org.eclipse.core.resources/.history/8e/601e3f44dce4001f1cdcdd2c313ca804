@@ -1,0 +1,172 @@
+#include "Drivers/LTC2990.h"
+
+//To ask Parth
+//should I use blocking or non-blocking functions for HAL_I2C function calls
+//what does inline in bmp390 driver meannnn
+//Should HAL_delay be changed to vTaskDelay() or something
+//get the print function from fred and implment it
+
+//this needs to be finished
+int LTC2990_Init(LTC2990_Handle_t *handle, uint8_t addr) {
+	int8_t ack;
+
+//	handle->hi2c = hi2c_pointer; // Pass it as a function parameter
+
+
+	//Initialize voltages to NAN
+	//Can this be changed so that it is in the struct
+	//i.e. last_voltages = {NAN, NAN, NAN, NAN}
+	for (int i = 0; i < 4; i++) {
+		handle->last_voltages[i] = NAN;
+	}
+
+	handle->i2c_address = addr;
+
+	ack = LTC2990_Set_Mode(handle, V1_V2_V3_V4, VOLTAGE_MODE_MASK);
+	if(ack != 0) {
+		CDC_Transmit_Print("Failed to set in Single Voltage Mode");
+		while(1);
+	}
+
+	// Enable all voltage channels
+	ack = LTC2990_Enable_All_Voltages(handle);
+	if(ack != 0) {
+		CDC_Transmit_Print("Failed to enable voltage channels.");
+		while(1);
+	}
+
+	CDC_Transmit_Print("LTC2990 configured for Single-Ended Voltage Monitoring.");
+
+	//Initial data reading
+	LTC2990_Step(handle);
+
+	return 0;
+}
+
+void LTC2990_Step(LTC2990_Handle_t *handle) {
+	int8_t ack;
+	int16_t adc_code;
+	int8_t data_valid;
+
+	//Trigger Conversion
+	ack = LTC2990_Trigger_Conversion(handle);
+	if(ack != 0) {
+		CDC_Transmit_Print("Failed to trigger conversion.");
+	}
+
+	// Allow time for conversion
+	HAL_Delay(10);
+
+	// Read voltages V1 to V4
+	uint8_t msb_registers[4] = {V1_MSB_REG, V2_MSB_REG, V3_MSB_REG, V4_MSB_REG};
+	for(int i = 0; i < 4; i++) {
+		ack = LTC2990_ADC_Read_New_Data(handle, msb_registers[i], &adc_code, &data_valid);
+		if(ack != 0 || data_valid != 1) {
+			CDC_Transmit_Print("Error reading Voltage");
+			CDC_Transmit_Print("%d", i + 1);
+			handle->last_voltages[i] = NAN;
+			continue;
+		}
+		handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(handle, adc_code);
+	}
+
+}
+
+void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages) {
+	for(int i = 0; i < 4; i++) {
+		voltages[i] = handle->last_voltages[i];
+	}
+}
+
+
+int8_t LTC2990_Enable_All_Voltages(LTC2990_Handle_t *handle) {
+	return LTC2990_Set_Mode(handle, ENABLE_ALL, TEMP_MEAS_MODE_MASK);
+}
+
+
+int8_t LTC2990_Set_Mode(LTC2990_Handle_t *handle, uint8_t bits_to_set, uint8_t bits_to_clear) {
+	uint8_t reg_data;
+	int8_t ack;
+
+	// Read current CONTROL_REG
+	ack = LTC2990_Read_Register(handle, CONTROL_REG, &reg_data);
+	if (ack != 0) {
+		return ack;
+	}
+
+	//Modify bits
+	reg_data &= ~bits_to_clear;
+	reg_data |= bits_to_set;
+
+	//Write back to CONTROL_REG
+	ack = LTC2990_Write_Register(handle, CONTROL_REG, &reg_data);
+	return ack;
+}
+
+
+int8_t LTC2990_Trigger_Conversion(LTC2990_Handle_t *handle) {
+	return LTC2990_Write_Register(handle, TRIGGER_REG, 0x00);
+}
+
+
+uint8_t LTC2990_ADC_Read_New_Data(LTC2990_Handle_t *handle, uint8_t msb_register_address, int16_t* adc_code, int8_t* data_valid) {
+	uint16_t timeout = TIMEOUT;
+	int8_t ack;
+	uint8_t status;
+	uint8_t status_bit = (msb_register_address / 2) - 1;
+
+	// Wait for new data
+	while (timeout--) {
+		ack = LTC2990_Read_Register(handle, STATUS_REG, &status);
+		if (ack != 0) {
+			return ack;
+		}
+
+		if (((status >> status_bit) & 0x01) == 1) break;
+
+		//
+		HAL_Delay(1);
+	}
+
+	if (timeout == 0) {
+		return 1;
+	}
+	//this line is so that there isn't a warning that this function doesn't return
+	//In the actual code, it should NEVER reach this point, as this would be the timeout
+	//ran out but got messed up
+	return 1;
+
+}
+
+float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc_code) {
+	float voltage;
+	int16_t sign = 1;
+
+	if(adc_code & 0x4000) { //If the code is negative
+		adc_code = (adc_code ^ 0x7FFF) + 1;// Two's compliment
+	}
+
+	adc_code &= 0x3FFF;
+	voltage = ((float)adc_code) * SINGLE_ENDED_LSB * sign;
+
+	return voltage;
+}
+
+int8_t LTC2990_Read_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data) {
+	HAL_StatusTypeDef status;
+	status = HAL_I2C_Mem_Read(handle->hi2c, handle->i2c_address << 1, reg_address, I2C_MEMADD_SIZE_8BIT, data, 1, TIMEOUT);
+	if(status == HAL_OK) {
+		return 0;
+	}
+	return 1;
+}
+
+
+int8_t LTC2990_Write_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t data) {
+	HAL_StatusTypeDef status;
+	status = HAL_I2C_Mem_Write(handle->hi2c, handle->i2c_address << 1, (uint16_t)reg_address, I2C_MEMADD_SIZE_8BIT, data, 1, TIMEOUT);
+	if(status == HAL_OK) {
+		return 0;
+	}
+	return 1;
+}

@@ -7,8 +7,10 @@
 //get the print function from fred and implment it
 
 //this needs to be finished
-int LTC2990_Init(LTC2990_Handle_t *handle, uint8_t addr) {
+int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c, uint8_t addr) {
 	int8_t ack;
+
+	handle->hi2c = hi2c;
 
 	//Initialize voltages to NAN
 	//Can this be changed so that it is in the struct
@@ -21,18 +23,19 @@ int LTC2990_Init(LTC2990_Handle_t *handle, uint8_t addr) {
 
 	ack = LTC2990_Set_Mode(handle, V1_V2_V3_V4, VOLTAGE_MODE_MASK);
 	if(ack != 0) {
-		//print function saying: Failed to set Single-Ended Mode.
+		CDC_Transmit_Print("Failed to set in Single Voltage Mode");
 		while(1);
 	}
+
 
 	// Enable all voltage channels
 	ack = LTC2990_Enable_All_Voltages(handle);
 	if(ack != 0) {
-		//print function saying: Failed to enable voltage channels.
+		CDC_Transmit_Print("Failed to enable voltage channels.");
 		while(1);
 	}
 
-	//print function saying: LTC2990 configured for Single-Ended Voltage Monitoring.
+	CDC_Transmit_Print("LTC2990 configured for Single-Ended Voltage Monitoring.");
 
 	//Initial data reading
 	LTC2990_Step(handle);
@@ -48,7 +51,7 @@ void LTC2990_Step(LTC2990_Handle_t *handle) {
 	//Trigger Conversion
 	ack = LTC2990_Trigger_Conversion(handle);
 	if(ack != 0) {
-		//Print function saying:"Failed to trigger conversion."
+		CDC_Transmit_Print("Failed to trigger conversion.");
 	}
 
 	// Allow time for conversion
@@ -59,8 +62,7 @@ void LTC2990_Step(LTC2990_Handle_t *handle) {
 	for(int i = 0; i < 4; i++) {
 		ack = LTC2990_ADC_Read_New_Data(handle, msb_registers[i], &adc_code, &data_valid);
 		if(ack != 0 || data_valid != 1) {
-			//Print function saying: Error reading V
-			//Print function saying: i + 1
+			CDC_Transmit_Print("Error reading Voltage %d", i + 1);
 			handle->last_voltages[i] = NAN;
 			continue;
 		}
@@ -96,7 +98,7 @@ int8_t LTC2990_Set_Mode(LTC2990_Handle_t *handle, uint8_t bits_to_set, uint8_t b
 	reg_data |= bits_to_set;
 
 	//Write back to CONTROL_REG
-	ack = LTC2990_Write_Register(handle, CONTROL_REG, &reg_data);
+	ack = LTC2990_Write_Register(handle, CONTROL_REG, reg_data);
 	return ack;
 }
 
@@ -141,6 +143,7 @@ float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc
 
 	if(adc_code & 0x4000) { //If the code is negative
 		adc_code = (adc_code ^ 0x7FFF) + 1;// Two's compliment
+		sign = -1;
 	}
 
 	adc_code &= 0x3FFF;
@@ -159,9 +162,9 @@ int8_t LTC2990_Read_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint
 }
 
 
-int8_t LTC2990_Write_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data) {
+int8_t LTC2990_Write_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t data) {
 	HAL_StatusTypeDef status;
-	status = HAL_I2C_Mem_Write(handle->hi2c, handle->i2c_address << 1, (uint16_t)reg_address, I2C_MEMADD_SIZE_8BIT, data, 1, TIMEOUT);
+	status = HAL_I2C_Mem_Write(handle->hi2c, handle->i2c_address << 1, (uint16_t)reg_address, I2C_MEMADD_SIZE_8BIT, &data, 1, TIMEOUT);
 	if(status == HAL_OK) {
 		return 0;
 	}
