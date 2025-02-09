@@ -109,6 +109,36 @@ int main(void)
   MX_USB_Device_Init();
   /* USER CODE BEGIN 2 */
 
+  	  FDCAN_FilterTypeDef sFilterConfig;
+
+	/* Configure Rx filter */
+	sFilterConfig.IdType = FDCAN_STANDARD_ID;
+	sFilterConfig.FilterIndex = 0;
+	sFilterConfig.FilterType = FDCAN_FILTER_MASK;
+	sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	sFilterConfig.FilterID1 = 0x321;
+	sFilterConfig.FilterID2 = 0x7FF;
+	if (HAL_FDCAN_ConfigFilter(&hfdcan2, &sFilterConfig) != HAL_OK)
+	{
+	  CDC_Transmit_Print("Error while configuring filter for FDCAN2");
+	}
+
+	/* Configure global filter:
+	   Filter all remote frames with STD and EXT ID
+	   Reject non matching frames with STD ID and EXT ID */
+	if (HAL_FDCAN_ConfigGlobalFilter(&hfdcan2, FDCAN_REJECT, FDCAN_REJECT, FDCAN_FILTER_REMOTE, FDCAN_FILTER_REMOTE) != HAL_OK)
+	{
+		CDC_Transmit_Print("Error while configuring global filter\n");
+	}
+
+  HAL_StatusTypeDef err = HAL_FDCAN_Start(&hfdcan2);
+    if (err != HAL_OK) {
+  	  char buf[60];// to send
+  	  int n = sprintf(buf, "init err: = 0x%02x\n", err);
+  	  CDC_Transmit_FS(buf, n);
+    }
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -130,7 +160,9 @@ int main(void)
 	  		  }
 	  	  } else {
 	  		  CDC_Transmit_Print("NO MESSAGES IN FIFO0\n"); //Data to send
+	  		  CDC_Transmit_Print("Current FDCAN state: 0x%02x\n", hfdcan2.State);
 	  	  }
+	HAL_Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -196,7 +228,7 @@ static void MX_FDCAN2_Init(void)
   /* USER CODE END FDCAN2_Init 1 */
   hfdcan2.Instance = FDCAN2;
   hfdcan2.Init.ClockDivider = FDCAN_CLOCK_DIV1;
-  hfdcan2.Init.FrameFormat = FDCAN_FRAME_CLASSIC;
+  hfdcan2.Init.FrameFormat = FDCAN_FRAME_FD_BRS;
   hfdcan2.Init.Mode = FDCAN_MODE_NORMAL;
   hfdcan2.Init.AutoRetransmission = DISABLE;
   hfdcan2.Init.TransmitPause = DISABLE;
