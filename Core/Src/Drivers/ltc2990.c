@@ -1,10 +1,11 @@
 #include "Drivers/LTC2990.h"
 
+#include "main.h"
+
 //To ask Parth
 //should I use blocking or non-blocking functions for HAL_I2C function calls
 //what does inline in bmp390 driver meannnn
 //Should HAL_delay be changed to vTaskDelay() or something
-//get the print function from fred and implment it
 
 //this needs to be finished
 int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c, uint8_t addr) {
@@ -78,7 +79,7 @@ void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages) {
 }
 
 
-int8_t LTC2990_Enable_All_Voltages(LTC2990_Handle_t *handle) {
+inline int8_t LTC2990_Enable_All_Voltages(LTC2990_Handle_t *handle) {
 	return LTC2990_Set_Mode(handle, ENABLE_ALL, TEMP_MEAS_MODE_MASK);
 }
 
@@ -101,7 +102,6 @@ int8_t LTC2990_Set_Mode(LTC2990_Handle_t *handle, uint8_t bits_to_set, uint8_t b
 	ack = LTC2990_Write_Register(handle, CONTROL_REG, reg_data);
 	return ack;
 }
-
 
 int8_t LTC2990_Trigger_Conversion(LTC2990_Handle_t *handle) {
 	return LTC2990_Write_Register(handle, TRIGGER_REG, 0x00);

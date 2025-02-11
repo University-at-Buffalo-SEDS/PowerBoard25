@@ -4,6 +4,9 @@
 #include "stm32g4xx_hal.h"
 #include <math.h>
 
+#include "main.h"
+
+
 // I2C Register Addresses
 #define STATUS_REG        (0x00)
 #define CONTROL_REG       (0x01)
@@ -51,5 +54,8 @@ float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, int16_t adc
 //L2C Communication Helpers
 int8_t LTC2990_Read_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data);
 int8_t LTC2990_Write_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t data);
+
+//For usb serial print
+extern void CDC_Transmit_Print(const char * format, ...);
 
 #endif
