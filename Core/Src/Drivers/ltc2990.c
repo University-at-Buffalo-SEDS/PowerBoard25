@@ -7,7 +7,7 @@
 //what does inline in bmp390 driver meannnn
 //Should HAL_delay be changed to vTaskDelay() or something
 
-//this needs to be finished
+extern void CDC_Transmit_Print(const char * format, ...);
 int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c, uint8_t addr) {
 	int8_t ack;
 
