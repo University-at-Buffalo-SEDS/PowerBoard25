@@ -22,6 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+//#include "Drivers/ltc2990.h"
 #include <stdarg.h>
 /* USER CODE END Includes */
 
@@ -32,7 +33,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define LTC2990_I2C_ADDR 0x4C
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -167,6 +168,13 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
   }
+  /* Zyad's LTC2990 Testing Code BEGIN */
+
+//    while(1) {
+//    	uint8_t ltc2990_addr = LTC2990_Read_Register(0x1E); //This address, 0x1E is the Manufacturer ID register
+//    }
+
+  /* Zyad's LTC2990 Testing Code END */
   /* USER CODE END 3 */
 }
 
