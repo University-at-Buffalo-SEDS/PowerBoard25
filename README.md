@@ -8,7 +8,7 @@ What we still need to implement:
 - [ ] Powerboard logic
 - [ ] CAN
 
-How to use LTC2990 Driver:
+##How to use LTC2990 Driver:
 
 To use, first init the chip with:
 
