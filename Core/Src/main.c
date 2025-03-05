@@ -33,7 +33,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define LTC2990_I2C_ADDRESS (0x4C)
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -145,7 +144,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (0)
+  while (1)
   {
 	  if(HAL_FDCAN_GetRxFifoFillLevel(&hfdcan2, FDCAN_RX_FIFO0) > 0) {
 	  		  CDC_Transmit_Print("There are some messages in the buffer!\n"); //Data to send
@@ -165,100 +164,10 @@ int main(void)
 	  		  CDC_Transmit_Print("Current FDCAN state: 0x%02x\n", hfdcan2.State);
 	  	  }
 	HAL_Delay(100);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
-
-  HAL_Delay(2000);
-
-  /*Zyad's ltc2990 testing code begin*/
-//  LTC2990_Init(&LTC2990_Handle, &hi2c2, LTC2990_I2C_ADDRESS);
-  /*Zyad's ltc2990 testing code begin*/
-
-  while(1) {
-
-	  //This is testing code for figuring out every part of the process:
-	  HAL_StatusTypeDef status; //This is the status
-	  uint8_t data; // this is the data buffer to use when reading
-	  uint8_t data_write;
-
-
-	  //We will start with the i2c handle: hi2c2
-	  //This handle has the requried i2c info, like the buffer size
-	  //current state and addresses
-
-	  //To initialize the chip, we need to:
-	  //Set the voltage mode
-	  //Enable all Voltages
-
-	  CDC_Transmit_Print("Stating Init \n \n");
-
-
-	  CDC_Transmit_Print("Starting to set mode \n");
-
-	  //Set the voltage mode, we start by:
-	  //Reading the control register
-	  //This is done to make sure everything is okay and
-	  //see the current settings of the chip
-
-	  CDC_Transmit_Print("Reading Control Register...\n");
-	  status = HAL_I2C_Mem_Read(&hi2c2, 0x4C << 1, 0x01, 1, &data, 1, 1000);
-	  if(status != HAL_OK) {
-		  CDC_Transmit_Print("Failed to read Control Register\n");
-		  while(1);
-	  }
-	  CDC_Transmit_Print("Successfully read Control Register.\n");
-
-	  //Control register is default filled with 0x00
-	  CDC_Transmit_Print("Data in data buffer, i.e. values in control register - %u \n", data);
-
-	  //Enabling all voltages(and we also set other settings)
-	  //We want to write 00011111(0x07) to the register
-	  CDC_Transmit_Print("Writing to Control Register... \n");
-	  CDC_Transmit_Print("This line will not actually print anything and I have no idea why but if its not here the line above is not printed \n");
-	  data_write = 0x07;
-	  status = HAL_I2C_Mem_Write(&hi2c2, 0x4C << 1, 0x01, 1, &data_write, 1, 1000);
-	  if(status != HAL_OK) {
-		  CDC_Transmit_Print("Failed to write to Control Register\n");
-		  while(1);
-	  }
-	  CDC_Transmit_Print("Successfully wrote to Control Register...\n");
-
-	  //Let's read back the data in the control register to make sure everything
-	  //Is good, it should read 00000111
-	  CDC_Transmit_Print("Reading Control Register...\n");
-	  	  status = HAL_I2C_Mem_Read(&hi2c2, 0x4C << 1, 0x01, 1, &data, 1, 1000);
-	  	  if(status != HAL_OK) {
-	  		  CDC_Transmit_Print("Failed to read Control Register\n");
-	  		  while(1);
-	  	  }
-	  CDC_Transmit_Print("Successfully read Control Register...\n");
-
-	  //Data in control register should be the 0x07 that we set it to
-	  CDC_Transmit_Print("Data in data buffer, i.e. values in control register - %u \n", data);
-
-	  //all done :D review debug messages
-	  while(1) {
-
-	  }
-
-
-
-//	  LTC2990_Step(&LTC2990_Handle);
-//	  LTC2990_TESTFUN(&LTC2990_Handle, hi2c2);
-//
-//
-//
-//
-//	  float voltages[4];
-//	  LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
-//
-//	  for (int i = 0; i < 4; i++) {
-//		  CDC_Transmit_Print("Voltage %d: %d.%03d V\n", i ,  (int)voltages[i], (int)((voltages[i] - (int)voltages[i]) * 1000));;
-//	  }
-//
-//	  HAL_Delay(1000);
   }
 
   /* USER CODE END 3 */

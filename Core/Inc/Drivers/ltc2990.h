@@ -31,6 +31,8 @@
 // Timeout for data validity in milliseconds
 #define TIMEOUT 1000
 
+#define LTC2990_I2C_ADDRESS (0x4C)
+
 typedef struct {
 	I2C_HandleTypeDef *hi2c;
 	uint8_t i2c_address;
@@ -39,8 +41,7 @@ typedef struct {
 	float last_voltages[4];
 } LTC2990_Handle_t;
 
-int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c, uint8_t i2c_addr);
-void LTC2990_TESTFUN(LTC2990_Handle_t *handle, I2C_HandleTypeDef hi2c);
+int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c);
 void LTC2990_Step(LTC2990_Handle_t *handle);
 void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages);
 
