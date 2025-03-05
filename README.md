@@ -12,13 +12,15 @@ How to use LTC2990 Driver:
 
 To use, first init the chip with:
 
-	ex. usage:
-	LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c);
+	Init function:
+	int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c);
 	
 	ex. usage:
 	LTC2990_Init(&LTC2990_Handle, &hi2c2)
 
 Next, step to get the latest voltage values:
+	
+	Step function:
 	void LTC2990_Step(LTC2990_Handle_t *handle);
 	
 	ex. usage:
@@ -26,7 +28,9 @@ Next, step to get the latest voltage values:
 
 To get these newly collected values use LTC2990_Get_Voltage
 This function will not return the voltages, instead, initialze an array in the main.c with
-the voltages values you want to store. Pass a pointer to that array in the function.
+the voltages values you want to store. Pass a pointer to that array in the function:
+
+	Get Voltages function:
 	void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages);
 	
 	ex. usage:
