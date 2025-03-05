@@ -9,6 +9,7 @@ What we still need to implement:
 - [ ] CAN
 
 How to use LTC2990 Driver:
+
 To use, first init the chip with:
 	LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c);
 	
