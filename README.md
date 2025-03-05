@@ -8,27 +8,24 @@ What we still need to implement:
 - [ ] Powerboard logic
 - [ ] CAN
 
-How to use LTC2990:
+How to use LTC2990 Driver:
 To use, first init the chip with:
-	LTC2990_Init()
+	LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c);
 	
+	ex. usage:
+	LTC2990_Init(&LTC2990_Handle, &hi2c2)
 
+Next, step to get the latest voltage values:
+	void LTC2990_Step(LTC2990_Handle_t *handle);
 	
+	ex. usage:
+	LTC2990_Step(&LTC2990_Handle);
+
+To get these newly collected values use LTC2990_Get_Voltage
+This function will not return the voltages, instead, initialze an array in the main.c with
+the voltages values you want to store. Pass a pointer to that array in the function.
+	void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages);
 	
-	
-	
-  LTC2990_Init(&LTC2990_Handle, &hi2c2);
-
-  while(1) {
-	  LTC2990_Step(&LTC2990_Handle);
-
-
-	  float voltages[4];
-	  LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
-
-	  for (int i = 0; i < 4; i++) {
-		  CDC_Transmit_Print("Voltage %d: %d.%03d V\n", i ,  (int)voltages[i], (int)((voltages[i] - (int)voltages[i]) * 1000));;
-	  }
-
-	  HAL_Delay(1000);
-  }
+	ex. usage:
+	float voltages[4];
+	LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
