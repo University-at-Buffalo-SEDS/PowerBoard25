@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "usb_device.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -33,6 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -45,6 +47,29 @@ FDCAN_HandleTypeDef hfdcan2;
 
 I2C_HandleTypeDef hi2c2;
 
+UART_HandleTypeDef hlpuart1;
+
+/* Definitions for defaultTask */
+osThreadId_t defaultTaskHandle;
+const osThreadAttr_t defaultTask_attributes = {
+  .name = "defaultTask",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
+/* Definitions for readVoltageTask */
+osThreadId_t readVoltageTaskHandle;
+const osThreadAttr_t readVoltageTask_attributes = {
+  .name = "readVoltageTask",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
+/* Definitions for blinkLEDTask */
+osThreadId_t blinkLEDTaskHandle;
+const osThreadAttr_t blinkLEDTask_attributes = {
+  .name = "blinkLEDTask",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 700 * 4
+};
 /* USER CODE BEGIN PV */
 
 FDCAN_RxHeaderTypeDef RxHeader;
@@ -59,6 +84,11 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_FDCAN2_Init(void);
 static void MX_I2C2_Init(void);
+static void MX_LPUART1_UART_Init(void);
+void StartDefaultTask(void *argument);
+void startReadVoltageTask(void *argument);
+void startBlinkLEDTask(void *argument);
+
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -86,6 +116,10 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 
+
+
+
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -108,7 +142,7 @@ int main(void)
   MX_GPIO_Init();
   MX_FDCAN2_Init();
   MX_I2C2_Init();
-  MX_USB_Device_Init();
+  MX_LPUART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   	  FDCAN_FilterTypeDef sFilterConfig;
@@ -140,30 +174,104 @@ int main(void)
   	  CDC_Transmit_FS(buf, n);
     }
 
+    /* TEMPORARY TILL I FIGURE OUR LED DRIVER */
+    HAL_Delay(1000);
+
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_SET);
+
+
+
+
+    /* END OF TEMP FOR LED DRIVER */
+
+
+
+
   /* USER CODE END 2 */
+
+  /* Init scheduler */
+  osKernelInitialize();
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* creation of defaultTask */
+  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+
+  /* creation of readVoltageTask */
+  readVoltageTaskHandle = osThreadNew(startReadVoltageTask, NULL, &readVoltageTask_attributes);
+
+  /* creation of blinkLEDTask */
+  blinkLEDTaskHandle = osThreadNew(startBlinkLEDTask, NULL, &blinkLEDTask_attributes);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* USER CODE BEGIN RTOS_EVENTS */
+  /* add events, ... */
+  /* USER CODE END RTOS_EVENTS */
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+	//QUICK TEST FOR LEDS
+
+    LTC2990_Init(&LTC2990_Handle, &hi2c2);
+
   while (1)
   {
-	  if(HAL_FDCAN_GetRxFifoFillLevel(&hfdcan2, FDCAN_RX_FIFO0) > 0) {
-	  		  CDC_Transmit_Print("There are some messages in the buffer!\n"); //Data to send
-	  		  //Recieve data
-	  		  HAL_StatusTypeDef err = HAL_FDCAN_GetRxMessage(&hfdcan2, FDCAN_RX_FIFO0, &RxHeader, RxData);
-	  		  if (err != HAL_OK)
-	  		  {
-	  			 // n = sprintf(printBuffer, );
-	  			  CDC_Transmit_Print("Error recieving message: 0x%02x\n", err);
-	  		  } else {
-	  			  //n = sprintf(printBuffer, "Recieved message: %s", RxData);
-	  			  //CDC_Transmit_FS(printBuffer, n);
-	  			  CDC_Transmit_Print("Recieved message: %s\n", RxData);
-	  		  }
-	  	  } else {
-	  		  CDC_Transmit_Print("NO MESSAGES IN FIFO0\n"); //Data to send
-	  		  CDC_Transmit_Print("Current FDCAN state: 0x%02x\n", hfdcan2.State);
-	  	  }
-	HAL_Delay(100);
+//	  if(HAL_FDCAN_GetRxFifoFillLevel(&hfdcan2, FDCAN_RX_FIFO0) > 0) {
+//	  		  CDC_Transmit_Print("There are some messages in the buffer!\n"); //Data to send
+//	  		  //Recieve data
+//	  		  HAL_StatusTypeDef err = HAL_FDCAN_GetRxMessage(&hfdcan2, FDCAN_RX_FIFO0, &RxHeader, RxData);
+//	  		  if (err != HAL_OK)
+//	  		  {
+//	  			 // n = sprintf(printBuffer, );
+//	  			  CDC_Transmit_Print("Error recieving message: 0x%02x\n", err);
+//	  		  } else {
+//	  			  //n = sprintf(printBuffer, "Recieved message: %s", RxData);
+//	  			  //CDC_Transmit_FS(printBuffer, n);
+//	  			  CDC_Transmit_Print("Recieved message: %s\n", RxData);
+//	  		  }
+//	  	  } else {
+//	  		  CDC_Transmit_Print("NO MESSAGES IN FIFO0\n"); //Data to send
+//	  		  CDC_Transmit_Print("Current FDCAN state: 0x%02x\n", hfdcan2.State);
+//	  	  }
+
+
+	LTC2990_Step(&LTC2990_Handle);
+
+	float voltages[4];
+	LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
+
+	for (int i = 0; i < 4; i++) {
+		CDC_Transmit_Print("Voltage %d: %d.%03d V\n", i + 1,  (int)voltages[i], (int)((voltages[i] - (int)voltages[i]) * 1000));;
+	}
+
+	 //HAL_Delay(500);
+	 HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin, GPIO_PIN_RESET);
+	 HAL_Delay(500);
+	 HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin, GPIO_PIN_SET);
 
     /* USER CODE END WHILE */
 
@@ -306,6 +414,53 @@ static void MX_I2C2_Init(void)
 }
 
 /**
+  * @brief LPUART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_LPUART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN LPUART1_Init 0 */
+
+  /* USER CODE END LPUART1_Init 0 */
+
+  /* USER CODE BEGIN LPUART1_Init 1 */
+
+  /* USER CODE END LPUART1_Init 1 */
+  hlpuart1.Instance = LPUART1;
+  hlpuart1.Init.BaudRate = 209700;
+  hlpuart1.Init.WordLength = UART_WORDLENGTH_8B;
+  hlpuart1.Init.StopBits = UART_STOPBITS_1;
+  hlpuart1.Init.Parity = UART_PARITY_NONE;
+  hlpuart1.Init.Mode = UART_MODE_TX_RX;
+  hlpuart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  hlpuart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  hlpuart1.Init.ClockPrescaler = UART_PRESCALER_DIV1;
+  hlpuart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&hlpuart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetTxFifoThreshold(&hlpuart1, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetRxFifoThreshold(&hlpuart1, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_DisableFifoMode(&hlpuart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN LPUART1_Init 2 */
+
+  /* USER CODE END LPUART1_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -319,18 +474,21 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin|BACKLIGHT_LEDS_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : PB5 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  /*Configure GPIO pins : FRONT_LED_Pin BACKLIGHT_LEDS_Pin */
+  GPIO_InitStruct.Pin = FRONT_LED_Pin|BACKLIGHT_LEDS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /**/
+  __HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB9);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -339,6 +497,87 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/* USER CODE BEGIN Header_StartDefaultTask */
+/**
+  * @brief  Function implementing the defaultTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void *argument)
+{
+  /* init code for USB_Device */
+  MX_USB_Device_Init();
+  /* USER CODE BEGIN 5 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_startReadVoltageTask */
+/**
+* @brief Function implementing the readVoltageTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startReadVoltageTask */
+void startReadVoltageTask(void *argument)
+{
+  /* USER CODE BEGIN startReadVoltageTask */
+  /* Infinite loop */
+  for(;;)
+  {
+	  LTC2990_Step(&LTC2990_Handle);
+	  osDelay(1);
+  }
+  /* USER CODE END startReadVoltageTask */
+}
+
+/* USER CODE BEGIN Header_startBlinkLEDTask */
+/**
+* @brief Function implementing the blinkLEDTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startBlinkLEDTask */
+void startBlinkLEDTask(void *argument)
+{
+  /* USER CODE BEGIN startBlinkLEDTask */
+  /* Infinite loop */
+  for(;;)
+  {
+	HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin, GPIO_PIN_SET);
+	osDelay(500);
+	HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin, GPIO_PIN_RESET);
+    osDelay(500);
+  }
+  /* USER CODE END startBlinkLEDTask */
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

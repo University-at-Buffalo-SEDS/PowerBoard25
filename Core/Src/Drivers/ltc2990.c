@@ -31,7 +31,7 @@ int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c) {
 	ack = LTC2990_Set_Mode(handle, V1_V2_V3_V4, VOLTAGE_MODE_MASK);
 
 	if(ack != 0) {
-		CDC_Transmit_Print("Failed to set in Single Voltage Mode");
+		CDC_Transmit_Print("Failed to set in Single Voltage Mode \n");
 		while(1);
 	}
 
@@ -39,11 +39,13 @@ int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c) {
 	// Enable all voltage channels
 	ack = LTC2990_Enable_All_Voltages(handle);
 	if(ack != 0) {
-		CDC_Transmit_Print("Failed to enable voltage channels.");
+		HAL_Delay(50);
+		CDC_Transmit_Print("Failed to enable voltage channels. \n");
 		while(1);
 	}
 
-	CDC_Transmit_Print("LTC2990 configured for Single-Ended Voltage Monitoring.");
+	HAL_Delay(100);
+	CDC_Transmit_Print("LTC2990 configured for Single-Ended Voltage Monitoring. \n");
 
 	//Initial data reading
 	LTC2990_Step(handle);
@@ -60,7 +62,6 @@ void LTC2990_Step(LTC2990_Handle_t *handle) {
 	int8_t ack;
 	int16_t adc_code;
 	int8_t data_valid;
-
 	//Trigger Conversion
 	ack = LTC2990_Trigger_Conversion(handle);
 	if(ack != 0) {
@@ -73,16 +74,17 @@ void LTC2990_Step(LTC2990_Handle_t *handle) {
 
 	// Read voltages V1 to V4
 	uint8_t msb_registers[4] = {V1_MSB_REG, V2_MSB_REG, V3_MSB_REG, V4_MSB_REG};
-	for(int i = 1; i <= 4; i++) {
+	for(int i = 0; i < 4; i++) {
 		ack = LTC2990_ADC_Read_New_Data(handle, msb_registers[i], &adc_code, &data_valid);
 		if(ack != 0 || data_valid != 1) {
-			CDC_Transmit_Print("Error reading Voltage %d \n", i + 1);
+			CDC_Transmit_Print("Error reading Voltage %d \n", i);
 			CDC_Transmit_Print("This is the ack: %d \n", ack);
 			CDC_Transmit_Print("This is the data valid: %d \n", data_valid);
 			handle->last_voltages[i] = NAN;
 			continue;
 		}
 		handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(handle, adc_code);
+		//CDC_Transmit_Print("Just Read Voltages, got: %x \n", handle->last_voltages[i]);
 	}
 
 }
@@ -92,7 +94,7 @@ void LTC2990_Step(LTC2990_Handle_t *handle) {
   * @param  Pointer to the LTC2990 handle
   * @param 	Pointer to the array to store voltage values to
   */
-void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages) {
+void LTC2990_Get_Voltage(LTC2990_Handle_t* handle, float* voltages) {
 	for(int i = 0; i < 4; i++) {
 		voltages[i] = handle->last_voltages[i];
 	}
@@ -207,7 +209,7 @@ float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, uint16_t ad
 int8_t LTC2990_Read_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data) {
 
 	HAL_StatusTypeDef status;
-	status = HAL_I2C_Mem_Read(handle->hi2c, handle->i2c_address << 1, reg_address, I2C_MEMADD_SIZE_8BIT, data, 1, TIMEOUT);
+	status = HAL_I2C_Mem_Read(handle->hi2c, handle->i2c_address << 1, reg_address, 1, data, 1, TIMEOUT);
 	if(status == HAL_OK) {
 		return 0;
 	}
