@@ -1,30 +1,15 @@
-<<<<<<< Updated upstream
-../Core/Src/main.c:99:6:CDC_Transmit_Print	1
-../Core/Src/main.c:114:5:main	5
-../Core/Src/main.c:288:6:SystemClock_Config	3
-../Core/Src/main.c:330:13:MX_FDCAN2_Init	2
-../Core/Src/main.c:373:13:MX_I2C2_Init	4
-../Core/Src/main.c:421:13:MX_LPUART1_UART_Init	5
-../Core/Src/main.c:468:13:MX_GPIO_Init	1
-../Core/Src/main.c:508:6:StartDefaultTask	1
-../Core/Src/main.c:528:6:startReadVoltageTask	1
-../Core/Src/main.c:547:6:startBlinkLEDTask	1
-../Core/Src/main.c:569:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/main.c:586:6:Error_Handler	1
-=======
 ../Core/Src/main.c:138:6:CDC_Transmit_Print	1
 ../Core/Src/main.c:153:5:main	4
-../Core/Src/main.c:323:6:SystemClock_Config	3
-../Core/Src/main.c:365:13:MX_FDCAN2_Init	2
-../Core/Src/main.c:408:13:MX_I2C2_Init	4
-../Core/Src/main.c:456:13:MX_LPUART1_UART_Init	5
-../Core/Src/main.c:503:13:MX_GPIO_Init	1
-../Core/Src/main.c:543:6:StartDefaultTask	1
-../Core/Src/main.c:563:6:startReadVoltageTask	2
-../Core/Src/main.c:585:6:startBlinkLEDTask	1
-../Core/Src/main.c:606:6:startPrintVoltage	2
-../Core/Src/main.c:630:6:startReadCurrent	1
-../Core/Src/main.c:648:6:startPrintCurrent	1
-../Core/Src/main.c:667:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/main.c:684:6:Error_Handler	1
->>>>>>> Stashed changes
+../Core/Src/main.c:326:6:SystemClock_Config	3
+../Core/Src/main.c:368:13:MX_FDCAN2_Init	2
+../Core/Src/main.c:411:13:MX_I2C2_Init	4
+../Core/Src/main.c:459:13:MX_LPUART1_UART_Init	5
+../Core/Src/main.c:506:13:MX_GPIO_Init	1
+../Core/Src/main.c:546:6:StartDefaultTask	1
+../Core/Src/main.c:566:6:startReadVoltageTask	2
+../Core/Src/main.c:589:6:startBlinkLEDTask	1
+../Core/Src/main.c:610:6:startPrintVoltage	2
+../Core/Src/main.c:634:6:startReadCurrent	1
+../Core/Src/main.c:652:6:startPrintCurrent	1
+../Core/Src/main.c:671:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/main.c:688:6:Error_Handler	1

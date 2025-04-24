@@ -287,14 +287,9 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-<<<<<<< Updated upstream
-
 	//QUICK TEST FOR LEDS
 
-    LTC2990_Init(&LTC2990_Handle, &hi2c2);
 
-=======
->>>>>>> Stashed changes
   while (1)
   {
 
@@ -571,22 +566,15 @@ void StartDefaultTask(void *argument)
 void startReadVoltageTask(void *argument)
 {
   /* USER CODE BEGIN startReadVoltageTask */
-<<<<<<< Updated upstream
-  /* Infinite loop */
-  for(;;)
-  {
-	  LTC2990_Step(&LTC2990_Handle);
-	  osDelay(1);
-=======
 	LTC2990_Init(&LTC2990_Voltage_Handle, &hi2c2, LTC2990_Voltage_I2C_Address);
   /* Infinite loop */
+
   for(;;)
   {
 	  if(osMutexAcquire(VoltageLTC2990MutexHandle, osWaitForever) == osOK) {
 		  LTC2990_Step(&LTC2990_Voltage_Handle);
 		  osMutexRelease(VoltageLTC2990MutexHandle);
 	  }
->>>>>>> Stashed changes
   }
   /* USER CODE END startReadVoltageTask */
 }
