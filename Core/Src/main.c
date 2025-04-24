@@ -236,7 +236,6 @@ int main(void)
 
 	//QUICK TEST FOR LEDS
 
-    LTC2990_Init(&LTC2990_Handle, &hi2c2);
 
   while (1)
   {
@@ -528,10 +527,17 @@ void StartDefaultTask(void *argument)
 void startReadVoltageTask(void *argument)
 {
   /* USER CODE BEGIN startReadVoltageTask */
+	LTC2990_Init(&LTC2990_Handle, &hi2c2);
   /* Infinite loop */
   for(;;)
   {
 	  LTC2990_Step(&LTC2990_Handle);
+	  float voltages[4];
+	  LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
+
+	  for (int i = 0; i < 4; i++) {
+		  CDC_Transmit_Print("Voltage %d: %d.%03d V\n", i ,  (int)voltages[i], (int)((voltages[i] - (int)voltages[i]) * 1000));;
+	  }
 	  osDelay(1);
   }
   /* USER CODE END startReadVoltageTask */
