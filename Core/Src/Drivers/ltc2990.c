@@ -14,7 +14,7 @@ extern void CDC_Transmit_Print(const char * format, ...);
   * @param  Pointer to the HAL I2C HandleTypeDef
   * @retval HAL status
   */
-int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c) {
+int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c, uint8_t address) {
 	int8_t ack;
 
 	handle->hi2c = hi2c;
@@ -26,7 +26,7 @@ int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c) {
 		handle->last_voltages[i] = NAN;
 	}
 
-	handle->i2c_address = LTC2990_I2C_ADDRESS;
+	handle->i2c_address = address;
 
 	ack = LTC2990_Set_Mode(handle, V1_V2_V3_V4, VOLTAGE_MODE_MASK);
 

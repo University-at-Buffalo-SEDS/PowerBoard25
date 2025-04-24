@@ -21,9 +21,10 @@
 
 // Control Register Settings
 #define VOLTAGE_MODE_MASK	(0x07)
+#define TEMP_MEAS_MODE_MASK (0x18)
+
 #define V1_V2_V3_V4			(0x07)
 #define ENABLE_ALL			(0x18)
-#define TEMP_MEAS_MODE_MASK (0x18)
 
 // Conversion Constants
 #define SINGLE_ENDED_LSB (5.0f / 16384.0f) // 5V / 2^14
@@ -31,7 +32,7 @@
 // Timeout for data validity in milliseconds
 #define TIMEOUT 1000
 
-#define LTC2990_I2C_ADDRESS (0x4C)
+//#define LTC2990_I2C_ADDRESS (0x4C)
 
 typedef struct {
 	I2C_HandleTypeDef *hi2c;
@@ -41,7 +42,7 @@ typedef struct {
 	float last_voltages[4];
 } LTC2990_Handle_t;
 
-int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c);
+int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c, uint8_t address);
 void LTC2990_Step(LTC2990_Handle_t *handle);
 void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages);
 

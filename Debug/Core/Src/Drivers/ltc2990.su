@@ -1,4 +1,4 @@
-../Core/Src/Drivers/ltc2990.c:17:5:LTC2990_Init	24	static
+../Core/Src/Drivers/ltc2990.c:17:5:LTC2990_Init	32	static
 ../Core/Src/Drivers/ltc2990.c:61:6:LTC2990_Step	32	static
 ../Core/Src/Drivers/ltc2990.c:97:6:LTC2990_Get_Voltage	24	static
 ../Core/Src/Drivers/ltc2990.c:104:15:LTC2990_Enable_All_Voltages	16	static

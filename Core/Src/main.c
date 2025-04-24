@@ -40,6 +40,10 @@
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 #define PRINT_BUFFER_SIZE 100
+
+#define LTC2990_Voltage_I2C_Address 0x98 >> 1
+#define LTC2990_Current_I2C_Address 0x9C >> 1
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -70,12 +74,44 @@ const osThreadAttr_t blinkLEDTask_attributes = {
   .priority = (osPriority_t) osPriorityLow,
   .stack_size = 700 * 4
 };
+/* Definitions for printVoltage */
+osThreadId_t printVoltageHandle;
+const osThreadAttr_t printVoltage_attributes = {
+  .name = "printVoltage",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 700 * 4
+};
+/* Definitions for readCurrent */
+osThreadId_t readCurrentHandle;
+const osThreadAttr_t readCurrent_attributes = {
+  .name = "readCurrent",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
+/* Definitions for printCurrent */
+osThreadId_t printCurrentHandle;
+const osThreadAttr_t printCurrent_attributes = {
+  .name = "printCurrent",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 700 * 4
+};
+/* Definitions for VoltageLTC2990Mutex */
+osMutexId_t VoltageLTC2990MutexHandle;
+const osMutexAttr_t VoltageLTC2990Mutex_attributes = {
+  .name = "VoltageLTC2990Mutex"
+};
+/* Definitions for CurrentLTC2990Mutex */
+osMutexId_t CurrentLTC2990MutexHandle;
+const osMutexAttr_t CurrentLTC2990Mutex_attributes = {
+  .name = "CurrentLTC2990Mutex"
+};
 /* USER CODE BEGIN PV */
 
 FDCAN_RxHeaderTypeDef RxHeader;
 uint8_t RxData[64];
 
-LTC2990_Handle_t LTC2990_Handle;
+LTC2990_Handle_t LTC2990_Voltage_Handle;
+LTC2990_Handle_t LTC2990_Current_Handle;
 
 /* USER CODE END PV */
 
@@ -88,6 +124,9 @@ static void MX_LPUART1_UART_Init(void);
 void StartDefaultTask(void *argument);
 void startReadVoltageTask(void *argument);
 void startBlinkLEDTask(void *argument);
+void startPrintVoltage(void *argument);
+void startReadCurrent(void *argument);
+void startPrintCurrent(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -191,6 +230,12 @@ int main(void)
 
   /* Init scheduler */
   osKernelInitialize();
+  /* Create the mutex(es) */
+  /* creation of VoltageLTC2990Mutex */
+  VoltageLTC2990MutexHandle = osMutexNew(&VoltageLTC2990Mutex_attributes);
+
+  /* creation of CurrentLTC2990Mutex */
+  CurrentLTC2990MutexHandle = osMutexNew(&CurrentLTC2990Mutex_attributes);
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
@@ -218,6 +263,15 @@ int main(void)
   /* creation of blinkLEDTask */
   blinkLEDTaskHandle = osThreadNew(startBlinkLEDTask, NULL, &blinkLEDTask_attributes);
 
+  /* creation of printVoltage */
+  printVoltageHandle = osThreadNew(startPrintVoltage, NULL, &printVoltage_attributes);
+
+  /* creation of readCurrent */
+  readCurrentHandle = osThreadNew(startReadCurrent, NULL, &readCurrent_attributes);
+
+  /* creation of printCurrent */
+  printCurrentHandle = osThreadNew(startPrintCurrent, NULL, &printCurrent_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -233,13 +287,17 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+<<<<<<< Updated upstream
 
 	//QUICK TEST FOR LEDS
 
     LTC2990_Init(&LTC2990_Handle, &hi2c2);
 
+=======
+>>>>>>> Stashed changes
   while (1)
   {
+
 //	  if(HAL_FDCAN_GetRxFifoFillLevel(&hfdcan2, FDCAN_RX_FIFO0) > 0) {
 //	  		  CDC_Transmit_Print("There are some messages in the buffer!\n"); //Data to send
 //	  		  //Recieve data
@@ -257,21 +315,6 @@ int main(void)
 //	  		  CDC_Transmit_Print("NO MESSAGES IN FIFO0\n"); //Data to send
 //	  		  CDC_Transmit_Print("Current FDCAN state: 0x%02x\n", hfdcan2.State);
 //	  	  }
-
-
-	LTC2990_Step(&LTC2990_Handle);
-
-	float voltages[4];
-	LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
-
-	for (int i = 0; i < 4; i++) {
-		CDC_Transmit_Print("Voltage %d: %d.%03d V\n", i + 1,  (int)voltages[i], (int)((voltages[i] - (int)voltages[i]) * 1000));;
-	}
-
-	 //HAL_Delay(500);
-	 HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin, GPIO_PIN_RESET);
-	 HAL_Delay(500);
-	 HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin, GPIO_PIN_SET);
 
     /* USER CODE END WHILE */
 
@@ -528,11 +571,22 @@ void StartDefaultTask(void *argument)
 void startReadVoltageTask(void *argument)
 {
   /* USER CODE BEGIN startReadVoltageTask */
+<<<<<<< Updated upstream
   /* Infinite loop */
   for(;;)
   {
 	  LTC2990_Step(&LTC2990_Handle);
 	  osDelay(1);
+=======
+	LTC2990_Init(&LTC2990_Voltage_Handle, &hi2c2, LTC2990_Voltage_I2C_Address);
+  /* Infinite loop */
+  for(;;)
+  {
+	  if(osMutexAcquire(VoltageLTC2990MutexHandle, osWaitForever) == osOK) {
+		  LTC2990_Step(&LTC2990_Voltage_Handle);
+		  osMutexRelease(VoltageLTC2990MutexHandle);
+	  }
+>>>>>>> Stashed changes
   }
   /* USER CODE END startReadVoltageTask */
 }
@@ -556,6 +610,66 @@ void startBlinkLEDTask(void *argument)
     osDelay(500);
   }
   /* USER CODE END startBlinkLEDTask */
+}
+
+/* USER CODE BEGIN Header_startPrintVoltage */
+/**
+* @brief Function implementing the printVoltage thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startPrintVoltage */
+void startPrintVoltage(void *argument)
+{
+  /* USER CODE BEGIN startPrintVoltage */
+  /* Infinite loop */
+  for(;;)
+  {
+	  float voltages[4];
+	  LTC2990_Get_Voltage(&LTC2990_Voltage_Handle, voltages);
+
+	  for (int i = 0; i < 4; i++) {
+		  CDC_Transmit_Print("Voltage %d: %d.%03d V\n", i ,  (int)voltages[i], (int)((voltages[i] - (int)voltages[i]) * 1000));;
+	  }
+	  osDelay(1);
+  }
+  /* USER CODE END startPrintVoltage */
+}
+
+/* USER CODE BEGIN Header_startReadCurrent */
+/**
+* @brief Function implementing the readCurrent thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startReadCurrent */
+void startReadCurrent(void *argument)
+{
+  /* USER CODE BEGIN startReadCurrent */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END startReadCurrent */
+}
+
+/* USER CODE BEGIN Header_startPrintCurrent */
+/**
+* @brief Function implementing the printCurrent thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startPrintCurrent */
+void startPrintCurrent(void *argument)
+{
+  /* USER CODE BEGIN startPrintCurrent */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END startPrintCurrent */
 }
 
 /**
