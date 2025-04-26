@@ -29,7 +29,10 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+typedef struct
+{
+  float voltages[4];
+} instrumentationPayload_t;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -457,14 +460,15 @@ void startReadVoltageTask(void *argument)
   for (;;)
   {
     LTC2990_Step(&LTC2990_Handle);
-    float voltages[4];
-    LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
-
+    float raw[4];
+    LTC2990_Get_Voltage(&LTC2990_Handle, raw);
+    instrumentationPayload_t payload;
     for (int i = 0; i < 4; i++)
     {
-      CDC_Transmit_Print("Voltage %d: %.4f V\r\n", i, voltages[i] * multipliers[i]);
+      payload.voltages[i] = raw[i] * multipliers[i];
     }
-    osDelay(100);
+    osMessageQueuePut(sensorQueueHandle, &payload, 0, osWaitForever);
+    osDelay(50);
   }
   /* USER CODE END startReadVoltageTask */
 }
@@ -480,9 +484,27 @@ void StartSendMessage(void *argument)
 {
   /* USER CODE BEGIN StartSendMessage */
   /* Infinite loop */
+  instrumentationPayload_t payload;
+  uint8_t txBuf[sizeof(instrumentationPayload_t)];
+  FDCAN_TxHeaderTypeDef txHeader = {
+      .Identifier = 0x111,
+      .IdType = FDCAN_STANDARD_ID,
+      .TxFrameType = FDCAN_DATA_FRAME,
+      .DataLength = FDCAN_DLC_BYTES_16,
+      .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+      .BitRateSwitch = FDCAN_BRS_ON,
+      .FDFormat = FDCAN_FD_CAN,
+      .TxEventFifoControl = FDCAN_STORE_TX_EVENTS,
+      .MessageMarker = 0};
   for (;;)
   {
-    osDelay(1);
+    osMessageQueueGet(sensorQueueHandle, &payload, NULL, osWaitForever);
+    memcpy(txBuf, &payload, sizeof(payload));
+    if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &txHeader, txBuf) != HAL_OK)
+    {
+      CDC_Transmit_Print("Error!\r\n");
+    }
+    osDelay(100);
   }
   /* USER CODE END StartSendMessage */
 }
