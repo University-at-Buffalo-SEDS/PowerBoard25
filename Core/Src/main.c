@@ -76,9 +76,6 @@ const osMessageQueueAttr_t sensorQueue_attributes = {
     .name = "sensorQueue"};
 /* USER CODE BEGIN PV */
 
-FDCAN_RxHeaderTypeDef RxHeader;
-uint8_t RxData[64];
-
 LTC2990_Handle_t LTC2990_Handle;
 
 /* USER CODE END PV */
