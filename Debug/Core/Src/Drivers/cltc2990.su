@@ -1,0 +1,10 @@
+../Core/Src/Drivers/cltc2990.c:16:5:CLTC2990_Init	32	static
+../Core/Src/Drivers/cltc2990.c:60:6:CLTC2990_Step	24	static
+../Core/Src/Drivers/cltc2990.c:105:7:CLTC2990_Get_Current	16	static
+../Core/Src/Drivers/cltc2990.c:110:15:CLTC2990_Enable_V1DV2_V3DV4	16	static
+../Core/Src/Drivers/cltc2990.c:115:8:CLTC2990_Set_Mode	24	static
+../Core/Src/Drivers/cltc2990.c:138:8:CLTC2990_Trigger_Conversion	16	static
+../Core/Src/Drivers/cltc2990.c:143:9:CLTC2990_ADC_Read_New_Data	40	static
+../Core/Src/Drivers/cltc2990.c:200:7:CLTC2990_Code_To_Differential_Current	24	static
+../Core/Src/Drivers/cltc2990.c:218:8:CLTC2990_Read_Register	48	static
+../Core/Src/Drivers/cltc2990.c:244:8:CLTC2990_Write_Register	40	static

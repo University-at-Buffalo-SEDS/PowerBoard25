@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Drivers/ltc2990.h"
+#include "Drivers/cltc2990.h"
 #include <stdarg.h>
 /* USER CODE END Includes */
 
@@ -32,6 +33,7 @@
 typedef struct
 {
   float voltages[4];
+  float current;
 } instrumentationPayload_t;
 /* USER CODE END PTD */
 
@@ -55,28 +57,54 @@ UART_HandleTypeDef huart2;
 /* Definitions for blinkLED */
 osThreadId_t blinkLEDHandle;
 const osThreadAttr_t blinkLED_attributes = {
-    .name = "blinkLED",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 700 * 4};
+  .name = "blinkLED",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
 /* Definitions for readVoltageTask */
 osThreadId_t readVoltageTaskHandle;
 const osThreadAttr_t readVoltageTask_attributes = {
-    .name = "readVoltageTask",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 700 * 4};
+  .name = "readVoltageTask",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
 /* Definitions for sendMessage */
 osThreadId_t sendMessageHandle;
 const osThreadAttr_t sendMessage_attributes = {
-    .name = "sendMessage",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 700 * 4};
+  .name = "sendMessage",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
+/* Definitions for readCurrentTask */
+osThreadId_t readCurrentTaskHandle;
+const osThreadAttr_t readCurrentTask_attributes = {
+  .name = "readCurrentTask",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
+/* Definitions for printCurrent */
+osThreadId_t printCurrentHandle;
+const osThreadAttr_t printCurrent_attributes = {
+  .name = "printCurrent",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 700 * 4
+};
+/* Definitions for printVoltage */
+osThreadId_t printVoltageHandle;
+const osThreadAttr_t printVoltage_attributes = {
+  .name = "printVoltage",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 700 * 4
+};
 /* Definitions for sensorQueue */
 osMessageQueueId_t sensorQueueHandle;
 const osMessageQueueAttr_t sensorQueue_attributes = {
-    .name = "sensorQueue"};
+  .name = "sensorQueue"
+};
 /* USER CODE BEGIN PV */
 
 LTC2990_Handle_t LTC2990_Handle;
+CLTC2990_Handle_t CLTC2990_Handle;
 
 /* USER CODE END PV */
 
@@ -89,6 +117,9 @@ static void MX_USART2_UART_Init(void);
 void StartBlink(void *argument);
 void startReadVoltageTask(void *argument);
 void StartSendMessage(void *argument);
+void startReadCurrentTask(void *argument);
+void startPrintCurrent(void *argument);
+void startPrintVoltage(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -110,9 +141,9 @@ void CDC_Transmit_Print(const char *format, ...)
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
 
@@ -164,7 +195,7 @@ int main(void)
 
   /* Create the queue(s) */
   /* creation of sensorQueue */
-  sensorQueueHandle = osMessageQueueNew(16, sizeof(uint16_t), &sensorQueue_attributes);
+  sensorQueueHandle = osMessageQueueNew (16, sizeof(uint16_t), &sensorQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -179,6 +210,15 @@ int main(void)
 
   /* creation of sendMessage */
   sendMessageHandle = osThreadNew(StartSendMessage, NULL, &sendMessage_attributes);
+
+  /* creation of readCurrentTask */
+  readCurrentTaskHandle = osThreadNew(startReadCurrentTask, NULL, &readCurrentTask_attributes);
+
+  /* creation of printCurrent */
+  printCurrentHandle = osThreadNew(startPrintCurrent, NULL, &printCurrent_attributes);
+
+  /* creation of printVoltage */
+  printVoltageHandle = osThreadNew(startPrintVoltage, NULL, &printVoltage_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -206,22 +246,22 @@ int main(void)
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-   */
+  */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   /** Initializes the RCC Oscillators according to the specified parameters
-   * in the RCC_OscInitTypeDef structure.
-   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_HSI48;
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSI48;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
@@ -232,8 +272,9 @@ void SystemClock_Config(void)
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
@@ -246,10 +287,10 @@ void SystemClock_Config(void)
 }
 
 /**
- * @brief FDCAN2 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief FDCAN2 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_FDCAN2_Init(void)
 {
 
@@ -285,13 +326,14 @@ static void MX_FDCAN2_Init(void)
   /* USER CODE BEGIN FDCAN2_Init 2 */
 
   /* USER CODE END FDCAN2_Init 2 */
+
 }
 
 /**
- * @brief I2C2 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief I2C2 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_I2C2_Init(void)
 {
 
@@ -317,14 +359,14 @@ static void MX_I2C2_Init(void)
   }
 
   /** Configure Analogue filter
-   */
+  */
   if (HAL_I2CEx_ConfigAnalogFilter(&hi2c2, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
   {
     Error_Handler();
   }
 
   /** Configure Digital filter
-   */
+  */
   if (HAL_I2CEx_ConfigDigitalFilter(&hi2c2, 0) != HAL_OK)
   {
     Error_Handler();
@@ -332,13 +374,14 @@ static void MX_I2C2_Init(void)
   /* USER CODE BEGIN I2C2_Init 2 */
 
   /* USER CODE END I2C2_Init 2 */
+
 }
 
 /**
- * @brief USART2 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_USART2_UART_Init(void)
 {
 
@@ -379,18 +422,19 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
+
 }
 
 /**
- * @brief GPIO Initialization Function
- * @param None
- * @retval None
- */
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-  /* USER CODE END MX_GPIO_Init_1 */
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -399,10 +443,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin | BACKLIGHT_LEDS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin|BACKLIGHT_LEDS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : FRONT_LED_Pin BACKLIGHT_LEDS_Pin */
-  GPIO_InitStruct.Pin = FRONT_LED_Pin | BACKLIGHT_LEDS_Pin;
+  GPIO_InitStruct.Pin = FRONT_LED_Pin|BACKLIGHT_LEDS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -411,8 +455,8 @@ static void MX_GPIO_Init(void)
   /**/
   __HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB9);
 
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-  /* USER CODE END MX_GPIO_Init_2 */
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -431,9 +475,11 @@ void StartBlink(void *argument)
   /* init code for USB_Device */
   MX_USB_Device_Init();
   /* USER CODE BEGIN 5 */
+  HAL_GPIO_WritePin(GPIOB, BACKLIGHT_LEDS_Pin, GPIO_PIN_SET);
   /* Infinite loop */
   for (;;)
   {
+
     HAL_GPIO_TogglePin(FRONT_LED_GPIO_Port, FRONT_LED_Pin);
     osDelay(100);
   }
@@ -450,14 +496,16 @@ void StartBlink(void *argument)
 void startReadVoltageTask(void *argument)
 {
   /* USER CODE BEGIN startReadVoltageTask */
-  MX_USB_Device_Init();
+  //MX_USB_Device_Init();
   LTC2990_Init(&LTC2990_Handle, &hi2c2);
   static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
+  //static const float multipliers[4] = {1, 1, 1, 1};
   /* Infinite loop */
   for (;;)
   {
     LTC2990_Step(&LTC2990_Handle);
     float raw[4];
+    //damn path you freaky ;)))
     LTC2990_Get_Voltage(&LTC2990_Handle, raw);
     instrumentationPayload_t payload;
     for (int i = 0; i < 4; i++)
@@ -481,46 +529,115 @@ void StartSendMessage(void *argument)
 {
   /* USER CODE BEGIN StartSendMessage */
   /* Infinite loop */
-  instrumentationPayload_t payload;
-  uint8_t txBuf[sizeof(instrumentationPayload_t)];
-  FDCAN_TxHeaderTypeDef txHeader = {
-      .Identifier = 0x111,
-      .IdType = FDCAN_STANDARD_ID,
-      .TxFrameType = FDCAN_DATA_FRAME,
-      .DataLength = FDCAN_DLC_BYTES_16,
-      .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
-      .BitRateSwitch = FDCAN_BRS_ON,
-      .FDFormat = FDCAN_FD_CAN,
-      .TxEventFifoControl = FDCAN_STORE_TX_EVENTS,
-      .MessageMarker = 0};
+//  instrumentationPayload_t payload;
+//  uint8_t txBuf[sizeof(instrumentationPayload_t)];
+//  FDCAN_TxHeaderTypeDef txHeader = {
+//      .Identifier = 0x111,
+//      .IdType = FDCAN_STANDARD_ID,
+//      .TxFrameType = FDCAN_DATA_FRAME,
+//      .DataLength = FDCAN_DLC_BYTES_16,
+//      .ErrorStateIndicator = FDCAN_ESI_ACTIVE,
+//      .BitRateSwitch = FDCAN_BRS_ON,
+//      .FDFormat = FDCAN_FD_CAN,
+//      .TxEventFifoControl = FDCAN_STORE_TX_EVENTS,
+//      .MessageMarker = 0};
   for (;;)
   {
-    osMessageQueueGet(sensorQueueHandle, &payload, NULL, osWaitForever);
-    memcpy(txBuf, &payload, sizeof(payload));
-    if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &txHeader, txBuf) != HAL_OK)
-    {
-      CDC_Transmit_Print("Error!\r\n");
-    }
+//    osMessageQueueGet(sensorQueueHandle, &payload, NULL, osWaitForever);
+//    memcpy(txBuf, &payload, sizeof(payload));
+//    if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &txHeader, txBuf) != HAL_OK)
+//    {
+//      CDC_Transmit_Print("Error!\r\n");
+//    }
     osDelay(100);
   }
   /* USER CODE END StartSendMessage */
 }
 
+/* USER CODE BEGIN Header_startReadCurrentTask */
 /**
- * @brief  Period elapsed callback in non blocking mode
- * @note   This function is called  when TIM1 interrupt took place, inside
- * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
- * a global variable "uwTick" used as application time base.
- * @param  htim : TIM handle
- * @retval None
- */
+* @brief Function implementing the readCurrentTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startReadCurrentTask */
+void startReadCurrentTask(void *argument)
+{
+  /* USER CODE BEGIN startReadCurrentTask */
+  /* Infinite loop */
+//	MX_USB_Device_Init();
+//	CLTC2990_Init(&CLTC2990_Handle, &hi2c2, CLTC2990_I2C_ADDRESS);
+  for(;;)
+  {
+//	  instrumentationPayload_t payload;
+//	  CLTC2990_Step(&CLTC2990_Handle);
+//	  payload.current = CLTC2990_Get_Current(&CLTC2990_Handle);
+//	  osMessageQueuePut(sensorQueueHandle, &payload, 0, osWaitForever);
+	  osDelay(150);
+  }
+  /* USER CODE END startReadCurrentTask */
+}
+
+/* USER CODE BEGIN Header_startPrintCurrent */
+/**
+* @brief Function implementing the printCurrent thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startPrintCurrent */
+void startPrintCurrent(void *argument)
+{
+  /* USER CODE BEGIN startPrintCurrent */
+  /* Infinite loop */
+	//MX_USB_Device_Init();
+  for(;;)
+  {
+	//CDC_Transmit_Print("Current is: %f \n", CLTC2990_Get_Current(&CLTC2990_Handle));
+    osDelay(100);
+  }
+  /* USER CODE END startPrintCurrent */
+}
+
+/* USER CODE BEGIN Header_startPrintVoltage */
+/**
+* @brief Function implementing the printVoltage thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startPrintVoltage */
+void startPrintVoltage(void *argument)
+{
+  /* USER CODE BEGIN startPrintVoltage */
+  /* Infinite loop */
+//	MX_USB_Device_Init();
+	static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
+	//static const float multipliers[4] = {1, 1, 1, 1};
+  for(;;)
+  {
+	  float voltages[4];
+	  LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
+	  for (int i = 0; i < 4; i++) {
+		CDC_Transmit_Print("Voltage %d: %f \r\n", i + 1, voltages[i] * multipliers[i]);
+	  }
+    osDelay(1);
+  }
+  /* USER CODE END startPrintVoltage */
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM1)
-  {
+  if (htim->Instance == TIM1) {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
@@ -529,9 +646,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 }
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -543,14 +660,14 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
+#ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */

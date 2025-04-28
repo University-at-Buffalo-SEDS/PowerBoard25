@@ -1,16 +1,19 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (12.3.rel1)
+# Toolchain: GNU Tools for STM32 (13.3.rel1)
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/Drivers/cltc2990.c \
 ../Core/Src/Drivers/ltc2990.c 
 
 OBJS += \
+./Core/Src/Drivers/cltc2990.o \
 ./Core/Src/Drivers/ltc2990.o 
 
 C_DEPS += \
+./Core/Src/Drivers/cltc2990.d \
 ./Core/Src/Drivers/ltc2990.d 
 
 
@@ -21,7 +24,7 @@ Core/Src/Drivers/%.o Core/Src/Drivers/%.su Core/Src/Drivers/%.cyclo: ../Core/Src
 clean: clean-Core-2f-Src-2f-Drivers
 
 clean-Core-2f-Src-2f-Drivers:
-	-$(RM) ./Core/Src/Drivers/ltc2990.cyclo ./Core/Src/Drivers/ltc2990.d ./Core/Src/Drivers/ltc2990.o ./Core/Src/Drivers/ltc2990.su
+	-$(RM) ./Core/Src/Drivers/cltc2990.cyclo ./Core/Src/Drivers/cltc2990.d ./Core/Src/Drivers/cltc2990.o ./Core/Src/Drivers/cltc2990.su ./Core/Src/Drivers/ltc2990.cyclo ./Core/Src/Drivers/ltc2990.d ./Core/Src/Drivers/ltc2990.o ./Core/Src/Drivers/ltc2990.su
 
 .PHONY: clean-Core-2f-Src-2f-Drivers
 

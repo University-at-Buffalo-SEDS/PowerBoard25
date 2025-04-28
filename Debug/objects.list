@@ -1,3 +1,4 @@
+"./Core/Src/Drivers/cltc2990.o"
 "./Core/Src/Drivers/ltc2990.o"
 "./Core/Src/app_freertos.o"
 "./Core/Src/main.o"
