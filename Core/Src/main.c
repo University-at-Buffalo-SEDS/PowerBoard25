@@ -61,10 +61,10 @@ const osThreadAttr_t blinkLED_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 700 * 4
 };
-/* Definitions for readVoltageTask */
-osThreadId_t readVoltageTaskHandle;
-const osThreadAttr_t readVoltageTask_attributes = {
-  .name = "readVoltageTask",
+/* Definitions for readData */
+osThreadId_t readDataHandle;
+const osThreadAttr_t readData_attributes = {
+  .name = "readData",
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 700 * 4
 };
@@ -104,7 +104,7 @@ const osMessageQueueAttr_t sensorQueue_attributes = {
 /* USER CODE BEGIN PV */
 
 LTC2990_Handle_t LTC2990_Handle;
-CLTC2990_Handle_t CLTC2990_Handle;
+//CLTC2990_Handle_t CLTC2990_Handle;
 
 /* USER CODE END PV */
 
@@ -115,7 +115,7 @@ static void MX_FDCAN2_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_USART2_UART_Init(void);
 void StartBlink(void *argument);
-void startReadVoltageTask(void *argument);
+void startReadData(void *argument);
 void StartSendMessage(void *argument);
 void startReadCurrentTask(void *argument);
 void startPrintCurrent(void *argument);
@@ -205,8 +205,8 @@ int main(void)
   /* creation of blinkLED */
   blinkLEDHandle = osThreadNew(StartBlink, NULL, &blinkLED_attributes);
 
-  /* creation of readVoltageTask */
-  readVoltageTaskHandle = osThreadNew(startReadVoltageTask, NULL, &readVoltageTask_attributes);
+  /* creation of readData */
+  readDataHandle = osThreadNew(startReadData, NULL, &readData_attributes);
 
   /* creation of sendMessage */
   sendMessageHandle = osThreadNew(StartSendMessage, NULL, &sendMessage_attributes);
@@ -480,42 +480,46 @@ void StartBlink(void *argument)
   for (;;)
   {
 
-    HAL_GPIO_TogglePin(FRONT_LED_GPIO_Port, FRONT_LED_Pin);
+    //HAL_GPIO_TogglePin(FRONT_LED_GPIO_Port, FRONT_LED_Pin);
     osDelay(100);
   }
   /* USER CODE END 5 */
 }
 
-/* USER CODE BEGIN Header_startReadVoltageTask */
+/* USER CODE BEGIN Header_startReadData */
 /**
- * @brief Function implementing the readVoltageTask thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_startReadVoltageTask */
-void startReadVoltageTask(void *argument)
+* @brief Function implementing the readData thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startReadData */
+void startReadData(void *argument)
 {
-  /* USER CODE BEGIN startReadVoltageTask */
-  //MX_USB_Device_Init();
-  LTC2990_Init(&LTC2990_Handle, &hi2c2);
-  static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
-  //static const float multipliers[4] = {1, 1, 1, 1};
+  /* USER CODE BEGIN startReadData */
   /* Infinite loop */
-  for (;;)
+//  LTC2990_Init(&LTC2990_Handle, &hi2c2);
+//  CLTC2990_Init(&CLTC2990_Handle, &hi2c2);
+//  static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
+  for(;;)
   {
-    LTC2990_Step(&LTC2990_Handle);
-    float raw[4];
-    //damn path you freaky ;)))
-    LTC2990_Get_Voltage(&LTC2990_Handle, raw);
-    instrumentationPayload_t payload;
-    for (int i = 0; i < 4; i++)
-    {
-      payload.voltages[i] = raw[i] * multipliers[i];
-    }
-    osMessageQueuePut(sensorQueueHandle, &payload, 0, osWaitForever);
-    osDelay(50);
+//	  LTC2990_Step(&LTC2990_Handle);
+//	  float raw[4];
+//	  //damn path you freaky ;)))
+//	  LTC2990_Get_Voltage(&LTC2990_Handle, raw);
+//	  instrumentationPayload_t payload;
+//	  for (int i = 0; i < 4; i++)
+//	  {
+//		payload.voltages[i] = raw[i] * multipliers[i];
+//		CDC_Transmit_Print("Voltage %d: %f \r\n", i + 1, payload.voltages[i]);
+//	  }
+//
+//	  CLTC2990_Step(&CLTC2990_Handle);
+//	  payload.current = CLTC2990_Get_Current(&CLTC2990_Handle);
+//	  CDC_Transmit_Print("Current: %f \r\n", payload.current);
+	  //osMessageQueuePut(sensorQueueHandle, &payload, 0, osWaitForever);
+	  osDelay(100);
   }
-  /* USER CODE END startReadVoltageTask */
+  /* USER CODE END startReadData */
 }
 
 /* USER CODE BEGIN Header_StartSendMessage */
@@ -566,14 +570,16 @@ void startReadCurrentTask(void *argument)
   /* USER CODE BEGIN startReadCurrentTask */
   /* Infinite loop */
 //	MX_USB_Device_Init();
+//	CDC_Transmit_Print("Fear Not, For I am Here! \n");
 //	CLTC2990_Init(&CLTC2990_Handle, &hi2c2, CLTC2990_I2C_ADDRESS);
   for(;;)
   {
 //	  instrumentationPayload_t payload;
 //	  CLTC2990_Step(&CLTC2990_Handle);
 //	  payload.current = CLTC2990_Get_Current(&CLTC2990_Handle);
+//	  CDC_Transmit_Print("Current is: %f \n", payload.current/*CLTC2990_Get_Current(&CLTC2990_Handle)*/);
 //	  osMessageQueuePut(sensorQueueHandle, &payload, 0, osWaitForever);
-	  osDelay(150);
+	  osDelay(250);
   }
   /* USER CODE END startReadCurrentTask */
 }
@@ -592,7 +598,7 @@ void startPrintCurrent(void *argument)
 	//MX_USB_Device_Init();
   for(;;)
   {
-	//CDC_Transmit_Print("Current is: %f \n", CLTC2990_Get_Current(&CLTC2990_Handle));
+//	CDC_Transmit_Print("Current is: %f \n", CLTC2990_Get_Current(&CLTC2990_Handle));
     osDelay(100);
   }
   /* USER CODE END startPrintCurrent */
@@ -610,16 +616,20 @@ void startPrintVoltage(void *argument)
   /* USER CODE BEGIN startPrintVoltage */
   /* Infinite loop */
 //	MX_USB_Device_Init();
-	static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
+	//static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
+	static const float multipliers[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+	LTC2990_Init(&LTC2990_Handle, &hi2c2);
 	//static const float multipliers[4] = {1, 1, 1, 1};
   for(;;)
   {
+	  LTC2990_Step(&LTC2990_Handle);
 	  float voltages[4];
 	  LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
 	  for (int i = 0; i < 4; i++) {
 		CDC_Transmit_Print("Voltage %d: %f \r\n", i + 1, voltages[i] * multipliers[i]);
 	  }
-    osDelay(1);
+	  CDC_Transmit_Print("Current: %f \r\n", (voltages[0] - voltages[1]) / 0.005f);
+    osDelay(200);
   }
   /* USER CODE END startPrintVoltage */
 }
