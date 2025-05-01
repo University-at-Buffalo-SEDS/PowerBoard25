@@ -6,10 +6,10 @@
 ../Core/Src/main.c:385:13:MX_USART2_UART_Init	5
 ../Core/Src/main.c:433:13:MX_GPIO_Init	1
 ../Core/Src/main.c:473:6:StartBlink	1
-../Core/Src/main.c:496:6:startReadVoltageTask	2
+../Core/Src/main.c:496:6:startReadVoltageTask	1
 ../Core/Src/main.c:528:6:StartSendMessage	1
 ../Core/Src/main.c:564:6:startReadCurrentTask	1
 ../Core/Src/main.c:588:6:startPrintCurrent	1
-../Core/Src/main.c:608:6:startPrintVoltage	2
+../Core/Src/main.c:608:6:startPrintVoltage	1
 ../Core/Src/main.c:635:6:HAL_TIM_PeriodElapsedCallback	2
 ../Core/Src/main.c:652:6:Error_Handler	1

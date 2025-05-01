@@ -79,7 +79,7 @@ void CLTC2990_Step(CLTC2990_Handle_t *handle) {
 		CDC_Transmit_Print("Error reading Register %x \n", msb_registers[0]);
 		CDC_Transmit_Print("This is the ack: %d \n", ack);
 		CDC_Transmit_Print("This is the data valid: %d \n", data_valid);
-		handle->current = 2;
+		handle->current = NAN;
 	} else {
 		handle->current = CLTC2990_Code_To_Differential_Current(handle, adc_code);
 	}
@@ -89,7 +89,7 @@ void CLTC2990_Step(CLTC2990_Handle_t *handle) {
 		CDC_Transmit_Print("Error reading Register %x \n", msb_registers[1]);
 		CDC_Transmit_Print("This is the ack: %d \n", ack);
 		CDC_Transmit_Print("This is the data valid: %d \n", data_valid);
-		handle->current = 3;
+		handle->current = NAN;
 	} else {
 		handle->current = CLTC2990_Code_To_Differential_Current(handle, adc_code);
 	}

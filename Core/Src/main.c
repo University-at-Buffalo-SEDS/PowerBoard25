@@ -103,7 +103,7 @@ const osMessageQueueAttr_t sensorQueue_attributes = {
 };
 /* USER CODE BEGIN PV */
 
-LTC2990_Handle_t LTC2990_Handle;
+//LTC2990_Handle_t LTC2990_Handle;
 CLTC2990_Handle_t CLTC2990_Handle;
 
 /* USER CODE END PV */
@@ -497,22 +497,22 @@ void startReadVoltageTask(void *argument)
 {
   /* USER CODE BEGIN startReadVoltageTask */
   //MX_USB_Device_Init();
-  LTC2990_Init(&LTC2990_Handle, &hi2c2);
-  static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
+//  LTC2990_Init(&LTC2990_Handle, &hi2c2);
+//  static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
   //static const float multipliers[4] = {1, 1, 1, 1};
   /* Infinite loop */
   for (;;)
   {
-    LTC2990_Step(&LTC2990_Handle);
-    float raw[4];
-    //damn path you freaky ;)))
-    LTC2990_Get_Voltage(&LTC2990_Handle, raw);
-    instrumentationPayload_t payload;
-    for (int i = 0; i < 4; i++)
-    {
-      payload.voltages[i] = raw[i] * multipliers[i];
-    }
-    osMessageQueuePut(sensorQueueHandle, &payload, 0, osWaitForever);
+//    LTC2990_Step(&LTC2990_Handle);
+//    float raw[4];
+//    //damn path you freaky ;)))
+//    LTC2990_Get_Voltage(&LTC2990_Handle, raw);
+//    instrumentationPayload_t payload;
+//    for (int i = 0; i < 4; i++)
+//    {
+//      payload.voltages[i] = raw[i] * multipliers[i];
+//    }
+//    osMessageQueuePut(sensorQueueHandle, &payload, 0, osWaitForever);
     osDelay(50);
   }
   /* USER CODE END startReadVoltageTask */
@@ -566,12 +566,12 @@ void startReadCurrentTask(void *argument)
   /* USER CODE BEGIN startReadCurrentTask */
   /* Infinite loop */
 //	MX_USB_Device_Init();
-//	CLTC2990_Init(&CLTC2990_Handle, &hi2c2, CLTC2990_I2C_ADDRESS);
+	CLTC2990_Init(&CLTC2990_Handle, &hi2c2, CLTC2990_I2C_ADDRESS);
   for(;;)
   {
-//	  instrumentationPayload_t payload;
-//	  CLTC2990_Step(&CLTC2990_Handle);
-//	  payload.current = CLTC2990_Get_Current(&CLTC2990_Handle);
+	  instrumentationPayload_t payload;
+	  CLTC2990_Step(&CLTC2990_Handle);
+	  payload.current = CLTC2990_Get_Current(&CLTC2990_Handle);
 //	  osMessageQueuePut(sensorQueueHandle, &payload, 0, osWaitForever);
 	  osDelay(150);
   }
@@ -592,7 +592,7 @@ void startPrintCurrent(void *argument)
 	//MX_USB_Device_Init();
   for(;;)
   {
-	//CDC_Transmit_Print("Current is: %f \n", CLTC2990_Get_Current(&CLTC2990_Handle));
+	CDC_Transmit_Print("Current is: %f \n", CLTC2990_Get_Current(&CLTC2990_Handle));
     osDelay(100);
   }
   /* USER CODE END startPrintCurrent */
@@ -610,15 +610,15 @@ void startPrintVoltage(void *argument)
   /* USER CODE BEGIN startPrintVoltage */
   /* Infinite loop */
 //	MX_USB_Device_Init();
-	static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
+	//static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
 	//static const float multipliers[4] = {1, 1, 1, 1};
   for(;;)
   {
-	  float voltages[4];
-	  LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
-	  for (int i = 0; i < 4; i++) {
-		CDC_Transmit_Print("Voltage %d: %f \r\n", i + 1, voltages[i] * multipliers[i]);
-	  }
+//	  float voltages[4];
+//	  LTC2990_Get_Voltage(&LTC2990_Handle, voltages);
+//	  for (int i = 0; i < 4; i++) {
+//		CDC_Transmit_Print("Voltage %d: %f \r\n", i + 1, voltages[i] * multipliers[i]);
+//	  }
     osDelay(1);
   }
   /* USER CODE END startPrintVoltage */
