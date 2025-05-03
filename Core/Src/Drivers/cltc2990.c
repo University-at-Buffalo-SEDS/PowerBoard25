@@ -18,16 +18,12 @@ int CLTC2990_Init(CLTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c, uint8_t ad
 
 	handle->hi2c = hi2c;
 
-	//Initialize voltages to NAN
-	//Can this be changed so that it is in the struct
-	//i.e. last_voltages = {NAN, NAN, NAN, NAN}
-	for (int i = 0; i < 4; i++) {
-		handle->current = NAN;
-	}
+	//Initialize current to NAN
+	handle->current = NAN;
 
 	handle->i2c_address = address;
 
-	ack = CLTC2990_Set_Mode(handle, V1DV2_V3DV4, VOLTAGE_MODE_MASK);
+	ack = CLTC2990_Set_Mode(handle, 0x01, VOLTAGE_MODE_MASK); // was V1DV2_V3DV4
 
 	if(ack != 0) {
 		CDC_Transmit_Print("Failed to set in Differential Voltage Mode \n");
@@ -59,7 +55,7 @@ int CLTC2990_Init(CLTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c, uint8_t ad
   */
 void CLTC2990_Step(CLTC2990_Handle_t *handle) {
 	int8_t ack;
-	int16_t adc_code;
+	uint16_t adc_code;
 	int8_t data_valid;
 	//Trigger Conversion
 	ack = CLTC2990_Trigger_Conversion(handle);
@@ -71,7 +67,9 @@ void CLTC2990_Step(CLTC2990_Handle_t *handle) {
 	// Allow time for conversion
 	HAL_Delay(10);
 
-	// Read differential voltages V1-V2 and V3-V4
+	// Read differential voltage V1-V2
+
+	double current[1];
 
 	uint8_t msb_registers[2] = {V1DV2_MSB_REG, V3DV4_MSB_REG};
 	ack = CLTC2990_ADC_Read_New_Data(handle, msb_registers[0], &adc_code, &data_valid);
@@ -79,20 +77,26 @@ void CLTC2990_Step(CLTC2990_Handle_t *handle) {
 		CDC_Transmit_Print("Error reading Register %x \n", msb_registers[0]);
 		CDC_Transmit_Print("This is the ack: %d \n", ack);
 		CDC_Transmit_Print("This is the data valid: %d \n", data_valid);
-		handle->current = NAN;
+		current[0] = NAN;
 	} else {
-		handle->current = CLTC2990_Code_To_Differential_Current(handle, adc_code);
+		CDC_Transmit_Print("Code is %X \r\n", adc_code);
+		HAL_Delay(50);
+		current[0] = CLTC2990_Code_To_Current(handle, adc_code);
 	}
 
-	ack = CLTC2990_ADC_Read_New_Data(handle, msb_registers[1], &adc_code, &data_valid);
-	if(ack != 0 || data_valid != 1) {
-		CDC_Transmit_Print("Error reading Register %x \n", msb_registers[1]);
-		CDC_Transmit_Print("This is the ack: %d \n", ack);
-		CDC_Transmit_Print("This is the data valid: %d \n", data_valid);
-		handle->current = NAN;
-	} else {
-		handle->current = CLTC2990_Code_To_Differential_Current(handle, adc_code);
-	}
+	//To enable redaings of V3-V4, uncomment lines below
+
+//	ack = CLTC2990_ADC_Read_New_Data(handle, msb_registers[1], &adc_code, &data_valid);
+//	if(ack != 0 || data_valid != 1) {
+//		CDC_Transmit_Print("Error reading Register %x \n", msb_registers[1]);
+//		CDC_Transmit_Print("This is the ack: %d \n", ack);
+//		CDC_Transmit_Print("This is the data valid: %d \n", data_valid);
+//		voltage[1] = NAN;
+//	} else {
+//		voltage[1] = CLTC2990_Code_To_Differential_Voltage(handle, adc_code);
+//	}
+
+	handle->current = current[0];
 
 
 }
@@ -102,7 +106,7 @@ void CLTC2990_Step(CLTC2990_Handle_t *handle) {
   * @param  Pointer to the LTC2990 handle
   * @param 	Pointer to the array to store voltage values to
   */
-float CLTC2990_Get_Current(CLTC2990_Handle_t* handle) {
+double CLTC2990_Get_Current(CLTC2990_Handle_t* handle) {
 	return handle->current;
 }
 
@@ -140,7 +144,7 @@ int8_t CLTC2990_Trigger_Conversion(CLTC2990_Handle_t *handle) {
 }
 
 
-uint8_t CLTC2990_ADC_Read_New_Data(CLTC2990_Handle_t *handle, uint8_t msb_register_address, int16_t* adc_code, int8_t* data_valid) {
+uint8_t CLTC2990_ADC_Read_New_Data(CLTC2990_Handle_t *handle, uint8_t msb_register_address, uint16_t* adc_code, int8_t* data_valid) {
 	uint16_t timeout = TIMEOUT;
 	int8_t ack;
 	uint8_t status;
@@ -184,7 +188,11 @@ uint8_t CLTC2990_ADC_Read_New_Data(CLTC2990_Handle_t *handle, uint8_t msb_regist
 
 	uint16_t code = ((uint16_t)msb << 8) | lsb;
 	*data_valid = (code >> 15) & 0x01;  // Data valid bit
-	*adc_code = code & 0x3FFF;
+	*adc_code = code & 0x7FFF;
+	//I dont think this line is actually required, not very coolio
+	//i replaceed it with a [working?] one
+	//*adc_code = code;
+
 
 	return (*data_valid == 1) ? 0 : 1;
 
@@ -197,22 +205,23 @@ uint8_t CLTC2990_ADC_Read_New_Data(CLTC2990_Handle_t *handle, uint8_t msb_regist
 
 }
 
-float CLTC2990_Code_To_Differential_Current(CLTC2990_Handle_t *handle, uint16_t adc_code) {
-	float current;
+double CLTC2990_Code_To_Current(CLTC2990_Handle_t *handle, uint16_t adc_code) {
+	double voltage;
 	int16_t sign = 1;
 
 
-	if(adc_code & 0x4000) { //If the code is negative
-		adc_code = (adc_code ^ 0x7FFF) + 1;// Two's compliment
+	if(adc_code & 0x4000) { //If the code is negative //was 0x4000
+		CDC_Transmit_Print("Negative??? \r\n");
+		adc_code = (adc_code ^ 0x3FFF) + 1;// Two's compliment //was 0x7FFF
 		sign = -1;
 	}
 
 	adc_code &= 0x3FFF;
-	current = ((float)adc_code) * CSINGLE_ENDED_LSB;
-	current /= RSENSE;
-	current *= sign;
+	voltage = ((double)adc_code) * CSINGLE_ENDED_LSB;
+	voltage /= RSENSE;
+	voltage *= sign;
 
-	return current;
+	return voltage;
 }
 
 int8_t CLTC2990_Read_Register(CLTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data) {
@@ -226,7 +235,7 @@ int8_t CLTC2990_Read_Register(CLTC2990_Handle_t *handle, uint8_t reg_address, ui
 	return 1;
 }
 
-//int8_t LTC2990_Read_Register(CLTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data) {
+//int8_t CLTC2990_Read_Register(CLTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data) {
 //	HAL_StatusTypeDef status;
 //	status = HAL_I2C_Master_Transmit(handle->hi2c, handle->i2c_address << 1, &reg_address, 1, TIMEOUT);
 //	if(status != HAL_OK) {
@@ -252,7 +261,7 @@ int8_t CLTC2990_Write_Register(CLTC2990_Handle_t *handle, uint8_t reg_address, u
 	return 1;
 }
 
-//int8_t LTC2990_Write_Register(CLTC2990_Handle_t *handle, uint8_t reg_address, uint8_t data) {
+//int8_t CLTC2990_Write_Register(CLTC2990_Handle_t *handle, uint8_t reg_address, uint8_t data) {
 //	int8_t ack;
 //	ack = HAL_I2C_Master_Transmit(handle->hi2c, handle->i2c_address << 1, &reg_address, 1, TIMEOUT);
 //	if(ack != 0) {

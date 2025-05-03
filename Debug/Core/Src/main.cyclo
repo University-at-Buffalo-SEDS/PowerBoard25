@@ -9,7 +9,7 @@
 ../Core/Src/main.c:496:6:startReadVoltageTask	1
 ../Core/Src/main.c:528:6:StartSendMessage	1
 ../Core/Src/main.c:564:6:startReadCurrentTask	1
-../Core/Src/main.c:588:6:startPrintCurrent	1
-../Core/Src/main.c:608:6:startPrintVoltage	1
-../Core/Src/main.c:635:6:HAL_TIM_PeriodElapsedCallback	2
-../Core/Src/main.c:652:6:Error_Handler	1
+../Core/Src/main.c:589:6:startPrintCurrent	1
+../Core/Src/main.c:609:6:startPrintVoltage	1
+../Core/Src/main.c:636:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/main.c:653:6:Error_Handler	1

@@ -83,8 +83,8 @@ void LTC2990_Step(LTC2990_Handle_t *handle) {
 			handle->last_voltages[i] = NAN;
 			continue;
 		}
+		CDC_Transmit_Print("Just Read Voltages, got: %d \n", adc_code);
 		handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(handle, adc_code);
-		//CDC_Transmit_Print("Just Read Voltages, got: %x \n", handle->last_voltages[i]);
 	}
 
 }

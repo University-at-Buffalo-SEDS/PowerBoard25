@@ -33,7 +33,7 @@
 typedef struct
 {
   float voltages[4];
-  float current;
+  double current;
 } instrumentationPayload_t;
 /* USER CODE END PTD */
 
@@ -574,6 +574,7 @@ void startReadCurrentTask(void *argument)
 	  payload.current = CLTC2990_Get_Current(&CLTC2990_Handle);
 //	  osMessageQueuePut(sensorQueueHandle, &payload, 0, osWaitForever);
 	  osDelay(150);
+
   }
   /* USER CODE END startReadCurrentTask */
 }
@@ -610,7 +611,7 @@ void startPrintVoltage(void *argument)
   /* USER CODE BEGIN startPrintVoltage */
   /* Infinite loop */
 //	MX_USB_Device_Init();
-	//static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
+//	static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
 	//static const float multipliers[4] = {1, 1, 1, 1};
   for(;;)
   {

@@ -31,7 +31,7 @@
 // Timeout for data validity in milliseconds
 #define TIMEOUT 1000
 
-#define LTC2990_I2C_ADDRESS (0x9A >> 1) //(0x4C)
+#define LTC2990_I2C_ADDRESS (0x4C) //(0x9A >> 1) //f
 
 typedef struct {
 	I2C_HandleTypeDef *hi2c;
