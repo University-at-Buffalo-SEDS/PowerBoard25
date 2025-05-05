@@ -20,6 +20,7 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "usb_device.h"
+#include "usbd_cdc_if.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -99,12 +100,18 @@ void StartSendMessage(void *argument);
 
 void CDC_Transmit_Print(const char *format, ...)
 {
-  char buf[PRINT_BUFFER_SIZE];
-  va_list args;
-  va_start(args, format);
-  int n = vsprintf(buf, format, args);
-  va_end(args);
-  CDC_Transmit_FS(buf, n);
+    char buf[PRINT_BUFFER_SIZE];
+    va_list  args;
+    va_start(args, format);
+    int len = vsnprintf(buf, sizeof(buf), format, args);
+    va_end(args);
+    if (len <= 0) {
+        return;
+    }
+    if (len > (PRINT_BUFFER_SIZE - 1)) {
+        len = PRINT_BUFFER_SIZE - 1;
+    }
+    CDC_Transmit_FS((uint8_t*)buf, (uint16_t)len);
 }
 
 /* USER CODE END 0 */
@@ -141,6 +148,8 @@ int main(void)
   MX_FDCAN2_Init();
   MX_I2C2_Init();
   MX_USART2_UART_Init();
+  MX_USB_Device_Init();
+  HAL_GPIO_WritePin(BACKLIGHT_LEDS_GPIO_Port, BACKLIGHT_LEDS_Pin, GPIO_PIN_SET);
   /* USER CODE BEGIN 2 */
 
   HAL_FDCAN_Start(&hfdcan2);
@@ -164,7 +173,7 @@ int main(void)
 
   /* Create the queue(s) */
   /* creation of sensorQueue */
-  sensorQueueHandle = osMessageQueueNew(16, sizeof(uint16_t), &sensorQueue_attributes);
+  sensorQueueHandle = osMessageQueueNew(16, sizeof(instrumentationPayload_t), &sensorQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -428,8 +437,6 @@ static void MX_GPIO_Init(void)
 /* USER CODE END Header_StartBlink */
 void StartBlink(void *argument)
 {
-  /* init code for USB_Device */
-  MX_USB_Device_Init();
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
   for (;;)
@@ -450,7 +457,6 @@ void StartBlink(void *argument)
 void startReadVoltageTask(void *argument)
 {
   /* USER CODE BEGIN startReadVoltageTask */
-  MX_USB_Device_Init();
   LTC2990_Init(&LTC2990_Handle, &hi2c2);
   static const float multipliers[4] = {28.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f, 25.0f / 10.0f};
   /* Infinite loop */
@@ -492,15 +498,13 @@ void StartSendMessage(void *argument)
       .BitRateSwitch = FDCAN_BRS_ON,
       .FDFormat = FDCAN_FD_CAN,
       .TxEventFifoControl = FDCAN_STORE_TX_EVENTS,
-      .MessageMarker = 0};
+      .MessageMarker = 0
+  };
   for (;;)
   {
     osMessageQueueGet(sensorQueueHandle, &payload, NULL, osWaitForever);
     memcpy(txBuf, &payload, sizeof(payload));
-    if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &txHeader, txBuf) != HAL_OK)
-    {
-      CDC_Transmit_Print("Error!\r\n");
-    }
+    HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &txHeader, txBuf);
     osDelay(100);
   }
   /* USER CODE END StartSendMessage */
