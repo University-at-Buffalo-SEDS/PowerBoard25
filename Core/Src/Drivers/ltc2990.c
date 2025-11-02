@@ -2,11 +2,22 @@
 
 #include "main.h"
 
-//To ask Parth
-//should I use blocking or non-blocking functions for HAL_I2C function calls
-//Should HAL_delay be changed to vTaskDelay() or something
+#if defined(USE_FREERTOS)
+  #include "FreeRTOS.h"
+  #include "task.h"
+  static inline void sleep_ms(uint32_t ms) {
+    if (xTaskGetSchedulerState() == taskSCHEDULER_RUNNING) {
+      vTaskDelay(pdMS_TO_TICKS(ms));
+    } else {
+      HAL_Delay(ms);
+    }
+  }
+#else
+  static inline void sleep_ms(uint32_t ms) { HAL_Delay(ms); }
+#endif
 
 extern void CDC_Transmit_Print(const char * format, ...);
+
 
 /**
   * @brief  Initialize the LTC2990 Chip
@@ -14,43 +25,26 @@ extern void CDC_Transmit_Print(const char * format, ...);
   * @param  Pointer to the HAL I2C HandleTypeDef
   * @retval HAL status
   */
-int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c) {
-	int8_t ack;
+int LTC2990_Init(LTC2990_Handle_t *h, I2C_HandleTypeDef *hi2c, I2C_HandleTypeDef *hi2c,uint8_t addr7,ltc2990_role_t role)
+{
+    h->hi2c        = hi2c;
+    h->i2c_address = addr7;
+    h->role        = role;
+    h->rsense_ohm  = RSENSE_OHM;
+    for (int i = 0; i < 4; ++i) h->last_voltages[i] = NAN;
 
-	handle->hi2c = hi2c;
+    uint8_t control = (role == LTC2990_ROLE_VOLTAGE)? 
+			(CTRL_ALL | V1_V2_V3_V4): 
+			(CTRL_V1_ONLY  | MODE_V1mV2_TR2);
 
-	//Initialize voltages to NAN
-	//Can this be changed so that it is in the struct
-	//i.e. last_voltages = {NAN, NAN, NAN, NAN}
-	for (int i = 0; i < 4; i++) {
-		handle->last_voltages[i] = NAN;
-	}
+    uint8_t clear_mask = TEMP_MEAS_MODE_MASK | VOLTAGE_MODE_MASK; // 0x1F
+    if (LTC2990_Set_Mode(h, control, clear_mask) != 0) return 1;
 
-	handle->i2c_address = LTC2990_I2C_ADDRESS;
+    if (LTC2990_Enable_All_Voltages(h) != 0) return 1;
 
-	ack = LTC2990_Set_Mode(handle, V1_V2_V3_V4, VOLTAGE_MODE_MASK);
-
-	if(ack != 0) {
-		CDC_Transmit_Print("Failed to set in Single Voltage Mode \n");
-		while(1);
-	}
-
-
-	// Enable all voltage channels
-	ack = LTC2990_Enable_All_Voltages(handle);
-	if(ack != 0) {
-		HAL_Delay(50);
-		CDC_Transmit_Print("Failed to enable voltage channels. \n");
-		while(1);
-	}
-
-	HAL_Delay(100);
-	CDC_Transmit_Print("LTC2990 configured for Single-Ended Voltage Monitoring. \n");
-
-	//Initial data reading
-	LTC2990_Step(handle);
-
-	return 0;
+    sleep_ms(100);
+    LTC2990_Step(h);
+    return 0;
 }
 
 /**
@@ -58,35 +52,33 @@ int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c) {
   * 		This does not return the voltage(s) read, use LTC2990_Get_Voltage to do so
   * @param  Pointer to the LTC2990 handle
   */
-void LTC2990_Step(LTC2990_Handle_t *handle) {
-	int8_t ack;
-	int16_t adc_code;
-	int8_t data_valid;
-	//Trigger Conversion
-	ack = LTC2990_Trigger_Conversion(handle);
-	if(ack != 0) {
-		CDC_Transmit_Print("Failed to trigger conversion.");
-		return;
-	}
+void LTC2990_Step(LTC2990_Handle_t *h)
+{
+    (void)LTC2990_Trigger_Conversion(h);
+    sleep_ms(10);
 
-	// Allow time for conversion
-	HAL_Delay(10);
-
-	// Read voltages V1 to V4
-	uint8_t msb_registers[4] = {V1_MSB_REG, V2_MSB_REG, V3_MSB_REG, V4_MSB_REG};
-	for(int i = 0; i < 4; i++) {
-		ack = LTC2990_ADC_Read_New_Data(handle, msb_registers[i], &adc_code, &data_valid);
-		if(ack != 0 || data_valid != 1) {
-			CDC_Transmit_Print("Error reading Voltage %d \n", i);
-			CDC_Transmit_Print("This is the ack: %d \n", ack);
-			CDC_Transmit_Print("This is the data valid: %d \n", data_valid);
-			handle->last_voltages[i] = NAN;
-			continue;
-		}
-		handle->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(handle, adc_code);
-		//CDC_Transmit_Print("Just Read Voltages, got: %x \n", handle->last_voltages[i]);
-	}
-
+    if (h->role == LTC2990_ROLE_VOLTAGE) {//Voltage role
+        const uint8_t regs[4] = { V1_MSB_REG, V2_MSB_REG, V3_MSB_REG, V4_MSB_REG };
+        for (int i = 0; i < 4; ++i) {
+            uint16_t raw15; int8_t valid;
+            if (LTC2990_ADC_Read_New_Data(h, regs[i], &raw15, &valid) == 0 && valid) {
+                uint16_t code14 = (raw15 & 0x3FFF); // SE uses 14-bit magnitude
+                h->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(h, code14);
+            } else {
+                h->last_voltages[i] = NAN;
+            }
+        }
+    } else { //CURRENT role
+        uint16_t raw15; int8_t valid;
+        if (LTC2990_ADC_Read_New_Data(h, V1_MSB_REG, &raw15, &valid) == 0 && valid) {
+            h->last_voltages[0] = LTC2990_Code15_To_CurrentA(raw15, h->rsense_ohm);
+        } else {
+            h->last_voltages[0] = NAN;
+        }
+        h->last_voltages[1] = NAN;
+        h->last_voltages[2] = NAN;
+        h->last_voltages[3] = NAN;
+    }
 }
 
 /**
@@ -134,61 +126,27 @@ int8_t LTC2990_Trigger_Conversion(LTC2990_Handle_t *handle) {
 }
 
 
-uint8_t LTC2990_ADC_Read_New_Data(LTC2990_Handle_t *handle, uint8_t msb_register_address, int16_t* adc_code, int8_t* data_valid) {
-	uint16_t timeout = TIMEOUT;
-	int8_t ack;
-	uint8_t status;
-	uint8_t status_bit = (msb_register_address / 2) - 1;
+uint8_t LTC2990_ADC_Read_New_Data(LTC2990_Handle_t *h, uint8_t msb_reg, uint16_t *raw15, int8_t *data_valid)
+{
+    uint16_t timeout = TIMEOUT;
+    uint8_t status;
+    uint8_t status_bit = (msb_reg / 2) - 1;
 
-	// Wait for new data
-	while (--timeout) {
-		ack = LTC2990_Read_Register(handle, STATUS_REG, &status);
+    while (--timeout) {
+        if (LTC2990_Read_Register(h, STATUS_REG, &status) != 0) return 1;
+        if (((status >> status_bit) & 0x01) == 1) break;
+        sleep_ms(1)
+    }
+    if (!timeout) return 1;
 
-		if (ack != 0) {
-			return ack;
-		}
+    uint8_t msb, lsb;
+    if (LTC2990_Read_Register(h, msb_reg,     &msb) != 0) return 1;
+    if (LTC2990_Read_Register(h, msb_reg + 1, &lsb) != 0) return 1;
 
-		if (((status >> status_bit) & 0x01) == 1) {
-			break;
-		}
-
-		//
-		HAL_Delay(1);
-	}
-
-
-	if (timeout == 0) {
-		CDC_Transmit_Print("LTC2990 TIMED OUT \n");
-		return 1;
-	}
-
-	//Read ADC data
-	uint8_t msb;
-	uint8_t lsb;
-	ack = LTC2990_Read_Register(handle, msb_register_address, &msb);
-	if(ack != 0) {
-		return ack;
-	}
-
-	ack = LTC2990_Read_Register(handle, msb_register_address + 1, &lsb);
-	if(ack != 0) {
-		return ack;
-	}
-
-
-	uint16_t code = ((uint16_t)msb << 8) | lsb;
-	*data_valid = (code >> 15) & 0x01;  // Data valid bit
-	*adc_code = code & 0x3FFF;
-
-	return (*data_valid == 1) ? 0 : 1;
-
-
-	//this line is so that there isn't a warning that this function doesn't return
-	//In the actual code, it should NEVER reach this point, as this would be the timeout
-	//ran out but got messed up
-	CDC_Transmit_Print("the thing I said wouldn't happen \n");
-	return 2;
-
+    uint16_t code = ((uint16_t)msb << 8) | lsb;
+    *data_valid = (code >> 15) & 0x01; //D15
+    *raw15 = code & 0x7FFF; //keep Sign (D14) + D[13:0]
+    return (*data_valid == 1) ? 0 : 1;
 }
 
 float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, uint16_t adc_code) {
@@ -206,6 +164,19 @@ float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, uint16_t ad
 	return voltage;
 }
 
+float LTC2990_Code15_To_CurrentA(uint16_t raw15)
+{	//All convertions in datasheet, look at it
+    const float a_per_count = 19.42e-6f / RSENSE_OHM; //19.42 µV / R
+    const uint16_t mag14 = (raw15 & 0x3FFF);          //D[13:0]
+    const uint8_t  sign  = (raw15 >> 14) & 0x1;       //D14
+
+    if (sign == 0) {
+        return  (float)mag14 * a_per_count;
+    } else {
+        return -(float)(mag14 + 1U) * a_per_count;
+    }
+}
+
 int8_t LTC2990_Read_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data) {
 
 	HAL_StatusTypeDef status;
@@ -216,20 +187,6 @@ int8_t LTC2990_Read_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint
 	CDC_Transmit_Print("I2C Read Register failed, status: %d\n", status);
 	return 1;
 }
-
-//int8_t LTC2990_Read_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data) {
-//	HAL_StatusTypeDef status;
-//	status = HAL_I2C_Master_Transmit(handle->hi2c, handle->i2c_address << 1, &reg_address, 1, TIMEOUT);
-//	if(status != HAL_OK) {
-//		return 1;
-//	}
-//
-//	status = HAL_I2C_Master_Receive(handle->hi2c, handle->i2c_address << 1, data, 1, TIMEOUT);
-//	if(status != HAL_OK) {
-//		return 1;
-//	}
-//	return 0;
-//}
 
 
 int8_t LTC2990_Write_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t data) {
@@ -242,16 +199,3 @@ int8_t LTC2990_Write_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uin
 
 	return 1;
 }
-
-//int8_t LTC2990_Write_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t data) {
-//	int8_t ack;
-//	ack = HAL_I2C_Master_Transmit(handle->hi2c, handle->i2c_address << 1, &reg_address, 1, TIMEOUT);
-//	if(ack != 0) {
-//		return 1;
-//	}
-//	HAL_I2C_Master_Transmit(handle->hi2c, handle->i2c_address << 1, &data, 1, TIMEOUT);
-//	if(ack != 0) {
-//		return 1;
-//	}
-//	return 0;
-//}
