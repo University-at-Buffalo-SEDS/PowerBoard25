@@ -4,8 +4,6 @@
 #include "stm32g4xx_hal.h"
 #include <math.h>
 
-#include "main.h"
-
 // I2C Register Addresses
 #define STATUS_REG			(0x00)
 #define CONTROL_REG			(0x01)
@@ -20,39 +18,54 @@
 #define V4_LSB_REG			(0x0D)
 
 // Control Register Settings
+#define MODE_V1mV2_TR2      (0x01)
 #define VOLTAGE_MODE_MASK	(0x07)
 #define V1_V2_V3_V4			(0x07)
 #define ENABLE_ALL			(0x18)
 #define TEMP_MEAS_MODE_MASK (0x18)
 
+#define CTRL_ALL       (3u << 3)  //b[4:3] = 11
+#define CTRL_V1_ONLY   (1u << 3)  //b[4:3] = 01
+
 // Conversion Constants
 #define SINGLE_ENDED_LSB (5.0f / 16384.0f) // 5V / 2^14
+#define RSENSE_OHM  (0.005f)//Current Sensing resistor value
 
 // Timeout for data validity in milliseconds
 #define TIMEOUT 1000
 
-#define LTC2990_I2C_ADDRESS (0x4C)
+//LTC2990 List
+#define LTC2990_I2C_ADDRESS_VOLTAGE (0x4C)//This is the voltage measuring LTC2990
+#define LTC2990_I2C_ADDRESS_CURRENT (0x4D)//This is the current measuring LTC2990
+
+typedef enum {
+    VOLTAGE,   //Its either the Voltage or the Current LTC2990
+    CURRENT
+} LTC2990_ROLE;
 
 typedef struct {
 	I2C_HandleTypeDef *hi2c;
 	uint8_t i2c_address;
-
+	LTC2990_ROLE role;
 	// Internal buffer for voltage readings
 	float last_voltages[4];
 } LTC2990_Handle_t;
 
-int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c);
+
+int LTC2990_Init(LTC2990_Handle_t *handle, I2C_HandleTypeDef *hi2c, uint8_t addr7, LTC2990_ROLE role);
+
 void LTC2990_Step(LTC2990_Handle_t *handle);
 void LTC2990_Get_Voltage(LTC2990_Handle_t *handle, float* voltages);
 
 int8_t LTC2990_Enable_All_Voltages(LTC2990_Handle_t *handle);
 int8_t LTC2990_Set_Mode(LTC2990_Handle_t *handle, uint8_t bits_to_set, uint8_t bits_to_clear);
 int8_t LTC2990_Trigger_Conversion(LTC2990_Handle_t *handle);
-uint8_t LTC2990_ADC_Read_New_Data(LTC2990_Handle_t *handle, uint8_t msb_register_address, int16_t* adc_code, int8_t* data_valid);
+uint8_t LTC2990_ADC_Read_New_Data(LTC2990_Handle_t *handle, uint8_t msb_register_address, uint16_t* raw15, int8_t* data_valid);
 
-float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, uint16_t adc_code);
+float LTC2990_Code_To_Single_Ended_Voltage(LTC2990_Handle_t *handle, uint16_t code14);
+float LTC2990_Code15_To_CurrentA(uint16_t raw15);
 
-//L2C Communication Helpers
+//I2C Communication Helpers
 int8_t LTC2990_Read_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t* data);
 int8_t LTC2990_Write_Register(LTC2990_Handle_t *handle, uint8_t reg_address, uint8_t data);
 
