@@ -2,6 +2,7 @@
 
 #include "main.h"
 
+//if FREERTOS is running, program uses vTaskDelay, if not it uses HAL_delay
 #if defined(USE_FREERTOS)
   #include "FreeRTOS.h"
   #include "task.h"
@@ -15,6 +16,7 @@
 #else
   static inline void sleep_ms(uint32_t ms) { HAL_Delay(ms); }
 #endif
+
 
 extern void CDC_Transmit_Print(const char * format, ...);
 
@@ -36,20 +38,30 @@ static inline uint8_t status_bit_from_msb(uint8_t msb_reg) {
   */
 int LTC2990_Init(LTC2990_Handle_t *h, I2C_HandleTypeDef *hi2c, uint8_t addr7,LTC2990_ROLE role)
 {
-    h->hi2c        = hi2c;
+    h->hi2c        = hi2c;//store references to the handle
     h->i2c_address = addr7;
     h->role        = role;
-    for (int i = 0; i < 4; ++i) h->last_voltages[i] = NAN;
+    for (int i = 0; i < 4; ++i) h->last_voltages[i] = NAN;//clears all cached readings in the handle
 
-    uint8_t control = (role == VOLTAGE)? 
-			(CTRL_ALL | V1_V2_V3_V4): 
-			(CTRL_V1_ONLY  | MODE_V1mV2_TR2);
 
-    uint8_t clear_mask = TEMP_MEAS_MODE_MASK | VOLTAGE_MODE_MASK; // 0x1F
-    if (LTC2990_Set_Mode(h, control, clear_mask) != 0) return 1;
+    //prob should make this line below more readable
+
+    //If the role of the chip is VOLTAGE, CTRL_ALL sets [4:3] to "11", which is "All Measurements per Mode"
+    //Also V1_V2_V3_V4 sets [2,0] to "111", which you can prob guess activates all voltage measurments (V1 V2 V3 V4)
+
+    //I have in the current setup DISABLED V3 and V4 on the CURRENT chip bc i dont know what it does, the following prob needs to be changed
+    //If the role of the chip is CURRENT, CTRL_V1_ONLY sets [4:3] to "01", which is "TR1, V1 or V1 – V2 Only per Mode", we want the V1-V2 
+    //bc that is part of the formula to get current according to the datasheet, READ IT
+    //Also MODE_V1mV2_TR2 sets [2,0] to "001", which is V1 – V2, TR2 (Ignore TR2 as we arent measuring temps)
+    uint8_t control = (role == VOLTAGE)? (CTRL_ALL | V1_V2_V3_V4): (CTRL_V1_ONLY  | MODE_V1mV2_TR2);
+
+    //mask to clear [4:3] and [2:0] before setting the new mode
+    uint8_t clear_mask = TEMP_MEAS_MODE_MASK | VOLTAGE_MODE_MASK;
+
+    if (LTC2990_Set_Mode(h, control, clear_mask) != 0) return 1;//sets the new mode
 
     sleep_ms(100);
-    LTC2990_Step(h);
+    LTC2990_Step(h);//Fills the cache
     return 0;
 }
 
@@ -58,7 +70,7 @@ int LTC2990_Init(LTC2990_Handle_t *h, I2C_HandleTypeDef *hi2c, uint8_t addr7,LTC
   * 		This does not return the voltage(s) read, use LTC2990_Get_Voltage to do so
   * @param  Pointer to the LTC2990 handle
   */
-void LTC2990_Step(LTC2990_Handle_t *h)
+void LTC2990_Step(LTC2990_Handle_t *h)//Use this to fill the cache, auto executes with initialization (LTC2990_Init)
 {
     (void)LTC2990_Trigger_Conversion(h);
     sleep_ms(10);
