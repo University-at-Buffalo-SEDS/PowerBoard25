@@ -20,11 +20,11 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "usb_device.h"
-#include "usbd_cdc_if.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Drivers/ltc2990.h"
+#include "usbd_cdc_if.h"
 #include <stdarg.h>
 /* USER CODE END Includes */
 
@@ -56,25 +56,29 @@ UART_HandleTypeDef huart2;
 /* Definitions for blinkLED */
 osThreadId_t blinkLEDHandle;
 const osThreadAttr_t blinkLED_attributes = {
-    .name = "blinkLED",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 700 * 4};
+  .name = "blinkLED",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
 /* Definitions for readVoltageTask */
 osThreadId_t readVoltageTaskHandle;
 const osThreadAttr_t readVoltageTask_attributes = {
-    .name = "readVoltageTask",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 700 * 4};
+  .name = "readVoltageTask",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
 /* Definitions for sendMessage */
 osThreadId_t sendMessageHandle;
 const osThreadAttr_t sendMessage_attributes = {
-    .name = "sendMessage",
-    .priority = (osPriority_t)osPriorityNormal,
-    .stack_size = 700 * 4};
+  .name = "sendMessage",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 700 * 4
+};
 /* Definitions for sensorQueue */
 osMessageQueueId_t sensorQueueHandle;
 const osMessageQueueAttr_t sensorQueue_attributes = {
-    .name = "sensorQueue"};
+  .name = "sensorQueue"
+};
 /* USER CODE BEGIN PV */
 
 LTC2990_Handle_t LTC2990_Handle;
@@ -117,9 +121,9 @@ void CDC_Transmit_Print(const char *format, ...)
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
 
@@ -148,8 +152,6 @@ int main(void)
   MX_FDCAN2_Init();
   MX_I2C2_Init();
   MX_USART2_UART_Init();
-  MX_USB_Device_Init();
-  HAL_GPIO_WritePin(BACKLIGHT_LEDS_GPIO_Port, BACKLIGHT_LEDS_Pin, GPIO_PIN_SET);
   /* USER CODE BEGIN 2 */
 
   HAL_FDCAN_Start(&hfdcan2);
@@ -173,7 +175,7 @@ int main(void)
 
   /* Create the queue(s) */
   /* creation of sensorQueue */
-  sensorQueueHandle = osMessageQueueNew(16, sizeof(instrumentationPayload_t), &sensorQueue_attributes);
+  sensorQueueHandle = osMessageQueueNew (16, sizeof(uint16_t), &sensorQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -215,22 +217,22 @@ int main(void)
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-   */
+  */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   /** Initializes the RCC Oscillators according to the specified parameters
-   * in the RCC_OscInitTypeDef structure.
-   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_HSI48;
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSI48;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
@@ -241,8 +243,9 @@ void SystemClock_Config(void)
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
@@ -255,10 +258,10 @@ void SystemClock_Config(void)
 }
 
 /**
- * @brief FDCAN2 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief FDCAN2 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_FDCAN2_Init(void)
 {
 
@@ -294,13 +297,14 @@ static void MX_FDCAN2_Init(void)
   /* USER CODE BEGIN FDCAN2_Init 2 */
 
   /* USER CODE END FDCAN2_Init 2 */
+
 }
 
 /**
- * @brief I2C2 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief I2C2 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_I2C2_Init(void)
 {
 
@@ -326,14 +330,14 @@ static void MX_I2C2_Init(void)
   }
 
   /** Configure Analogue filter
-   */
+  */
   if (HAL_I2CEx_ConfigAnalogFilter(&hi2c2, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
   {
     Error_Handler();
   }
 
   /** Configure Digital filter
-   */
+  */
   if (HAL_I2CEx_ConfigDigitalFilter(&hi2c2, 0) != HAL_OK)
   {
     Error_Handler();
@@ -341,13 +345,14 @@ static void MX_I2C2_Init(void)
   /* USER CODE BEGIN I2C2_Init 2 */
 
   /* USER CODE END I2C2_Init 2 */
+
 }
 
 /**
- * @brief USART2 Initialization Function
- * @param None
- * @retval None
- */
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_USART2_UART_Init(void)
 {
 
@@ -388,13 +393,14 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
+
 }
 
 /**
- * @brief GPIO Initialization Function
- * @param None
- * @retval None
- */
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -408,10 +414,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin | BACKLIGHT_LEDS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, FRONT_LED_Pin|BACKLIGHT_LEDS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : FRONT_LED_Pin BACKLIGHT_LEDS_Pin */
-  GPIO_InitStruct.Pin = FRONT_LED_Pin | BACKLIGHT_LEDS_Pin;
+  GPIO_InitStruct.Pin = FRONT_LED_Pin|BACKLIGHT_LEDS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -437,6 +443,8 @@ static void MX_GPIO_Init(void)
 /* USER CODE END Header_StartBlink */
 void StartBlink(void *argument)
 {
+  /* init code for USB_Device */
+  MX_USB_Device_Init();
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
   for (;;)
@@ -511,13 +519,13 @@ void StartSendMessage(void *argument)
 }
 
 /**
- * @brief  Period elapsed callback in non blocking mode
- * @note   This function is called  when TIM1 interrupt took place, inside
- * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
- * a global variable "uwTick" used as application time base.
- * @param  htim : TIM handle
- * @retval None
- */
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
@@ -533,9 +541,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 }
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -546,15 +554,14 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
 #ifdef USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
