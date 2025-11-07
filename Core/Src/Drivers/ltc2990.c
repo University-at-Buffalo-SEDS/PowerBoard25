@@ -41,7 +41,7 @@ int LTC2990_Init(LTC2990_Handle_t *h, I2C_HandleTypeDef *hi2c, uint8_t addr7,LTC
     h->hi2c        = hi2c;//store references to the handle
     h->i2c_address = addr7;
     h->role        = role;
-    for (int i = 0; i < 4; ++i) h->last_voltages[i] = NAN;//clears all cached readings in the handle
+    for (int i = 0; i < 4; ++i) h->last_of_role[i] = NAN;//clears all cached readings in the handle
 
 
     //prob should make this line below more readable
@@ -81,21 +81,21 @@ void LTC2990_Step(LTC2990_Handle_t *h)//Use this to fill the cache, auto execute
             uint16_t raw15; int8_t valid;
             if (LTC2990_ADC_Read_New_Data(h, regs[i], &raw15, &valid) == 0 && valid) {
                 uint16_t code14 = (raw15 & 0x3FFF); // SE uses 14-bit magnitude
-                h->last_voltages[i] = LTC2990_Code_To_Single_Ended_Voltage(h, code14);
+                h->last_of_role[i] = LTC2990_Code_To_Single_Ended_Voltage(h, code14);
             } else {
-                h->last_voltages[i] = NAN;
+                h->last_of_role[i] = NAN;
             }
         }
     } else { //CURRENT role
         uint16_t raw15; int8_t valid;
         if (LTC2990_ADC_Read_New_Data(h, V1_MSB_REG, &raw15, &valid) == 0 && valid) {
-            h->last_voltages[0] = LTC2990_Code15_To_CurrentA(raw15);
+            h->last_of_role[0] = LTC2990_Code15_To_CurrentA(raw15);
         } else {
-            h->last_voltages[0] = NAN;
+            h->last_of_role[0] = NAN;
         }
-        h->last_voltages[1] = NAN;
-        h->last_voltages[2] = NAN;
-        h->last_voltages[3] = NAN;
+        h->last_of_role[1] = NAN;
+        h->last_of_role[2] = NAN;
+        h->last_of_role[3] = NAN;
     }
 }
 
@@ -106,7 +106,7 @@ void LTC2990_Step(LTC2990_Handle_t *h)//Use this to fill the cache, auto execute
   */
 void LTC2990_Get_Readings(LTC2990_Handle_t* handle, float* values) {
 	for(int i = 0; i < 4; i++) {
-		values[i] = handle->last_voltages[i];
+		values[i] = handle->last_of_role[i];
 	}
 }
 

@@ -47,8 +47,8 @@ typedef struct {
 	I2C_HandleTypeDef *hi2c;
 	uint8_t i2c_address;
 	LTC2990_ROLE role;
-	// Internal buffer for voltage readings
-	float last_voltages[4];
+	// Internal buffer for readings
+	float last_of_role[4];
 } LTC2990_Handle_t;
 
 
